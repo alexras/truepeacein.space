@@ -13,15 +13,3 @@ body {
 
     font-family: 'narpassword00000_fixed.normal';
 }
-
-.App-body {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
-
-.App-column {
-    flex-grow: 1;
-    display: flex;
-    flex-flow: column;
-}

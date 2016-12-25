@@ -1,0 +1,11 @@
+.GameState-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.GameState-column {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+}
