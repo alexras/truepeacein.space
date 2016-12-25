@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'narpassword00000_fixed.normal';
+    src: url('fonts/narpassword000000/narpassword00000.fixed.width.fontvir.us-webfont.woff2') format('woff2'),
+         url('fonts/narpassword000000/narpassword00000.fixed.width.fontvir.us-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.password-uppercase {
+    color: #60F234;
+}
+
+.password-lowercase {
+    color: #62ACFF;
+}

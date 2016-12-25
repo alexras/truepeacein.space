@@ -1,24 +1,27 @@
-.App {
-  text-align: center;
+body {
+    background-color: black;
+    color: white;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.App {
+    text-align: center;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    height: 100px;
+    padding: 20px;
+
+    font-family: 'narpassword00000_fixed.normal';
 }
 
-.App-intro {
-  font-size: large;
+.App-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.App-column {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
 }

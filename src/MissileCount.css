@@ -1,0 +1,13 @@
+.MissileCount {
+    font-family: 'narpassword00000_fixed.normal';
+    display: block;
+}
+
+.MissileCount-icon {
+    float: left;
+}
+
+.MissileCount-count {
+    float: left;
+    font-size: x-large;
+}

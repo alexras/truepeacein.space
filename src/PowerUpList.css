@@ -1,0 +1,20 @@
+.PowerUpList {
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+}
+
+.PowerUpList-icon {
+    width: 80px;
+}
+
+.PowerUpList-name {
+    text-align: left;
+}
+
+.PowerUpList-taken {
+    width: 100px;
+}
+
+.PowerUpList-equipped {
+    width: 100px;
+}

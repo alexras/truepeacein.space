@@ -1,0 +1,18 @@
+.Items {
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+}
+
+.Items .item-missing {
+    filter: grayscale(100%) opacity(60%);
+}
+
+.Items-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Items-list .item {
+    flex-basis: 80px;
+}
