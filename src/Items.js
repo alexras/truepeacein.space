@@ -11,8 +11,8 @@ class ItemsForArea extends Component {
   }
 
   render() {
-    var missiles = this.state.missileContainers;
-    var energyTanks = this.state.energyTanks;
+    const missiles = this.state.missileContainers;
+    const energyTanks = this.state.energyTanks;
     //  var doors = props.status.doors;
 
     var sections = [];
