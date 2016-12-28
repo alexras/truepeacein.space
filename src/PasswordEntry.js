@@ -38,43 +38,17 @@ function passwordStringToMetroidAlphabet(passwordString) {
     }
   }
 
-  // To make the subsequent math easier, account for spaces now by turning on
-  // the low two bits of any character that precedes a space, and treating
-  // spaces like dashes afterwards
-
-  passwordBytes.forEach(function(passwordByte, index) {
-    if (passwordByte === 255 && index > 0) {
-      passwordBytes[index - 1] = passwordBytes[index - 1] | 0x03;
-      passwordBytes[index] = 63;
-    }
-  });
-
   return passwordBytes;
 }
 
 function passwordBytesToBlocks(passwordBytes) {
   var passwordBlocks = [];
 
-  var i = 0;
-  var j = 0;
-
-  var bitOffsets = [2, 4, 6];
-
-  while (i < passwordBytes.length - 1) {
-    var nextBlockHighBitCount = bitOffsets[j % 3];
-    var currentBlockLowBitCount = 8 - nextBlockHighBitCount;
-
-    var currentBlockLowBits = passwordBytes[i] << (8 - currentBlockLowBitCount);
-    var nextBlockHighBits = passwordBytes[i + 1] >> (6 - nextBlockHighBitCount);
-
-    passwordBlocks.push(currentBlockLowBits | nextBlockHighBits);
-
-    if (nextBlockHighBitCount === 6) {
-      i += 2;
-    } else {
-      i++;
-    }
-    j++;
+  for (var i = 0; i < 6; i++) {
+    var startIndex = i * 4;
+    passwordBlocks.push((passwordBytes[startIndex] << 2) | (passwordBytes[startIndex + 1] >> 4));
+    passwordBlocks.push((passwordBytes[startIndex + 1] << 4) | (passwordBytes[startIndex + 2] >> 2));
+    passwordBlocks.push((passwordBytes[startIndex + 2] << 6) | (passwordBytes[startIndex + 3]));
   }
 
   return new Uint8Array(passwordBlocks);
@@ -85,8 +59,6 @@ function rotateLeft(passwordBlocks) {
   var carry = 1;
   var carryTemp;
   var rotateAmount = passwordBlocks[SHIFT_BYTE];
-
-  console.log('Rotating left by ' + rotateAmount + ' bits');
 
   for (var i = 0; i < rotateAmount; i++) {
     var temp = passwordBlocks[15];
@@ -151,7 +123,7 @@ function passwordBlocksToGameStateJSON(passwordBlocks) {
 
   for (var i = GAME_AGE_START_BYTE; i <= GAME_AGE_END_BYTE; i++) {
     gameAgeInTicks += passwordBlocks[i];
-    gameAgeInTicks = gameAgeInTicks << 8;
+    gameAgeInTicks <<= 8;
   }
 
   var missiles = passwordBlocks[MISSILE_COUNT_BLOCK];
@@ -258,6 +230,10 @@ function passwordBlocksToGameStateJSON(passwordBlocks) {
     statuesRaised: {
       ridley: b(125),
       kraid: b(127)
+    },
+    gameAge: {
+      ntsc: gameAgeInTicks * (256 / 60),
+      pal: gameAgeInTicks * (256 / 50)
     }
   };
 }
