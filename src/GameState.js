@@ -4,74 +4,12 @@ import PowerUpList from './PowerUpList';
 import MissileCount from './MissileCount';
 import Items from './Items';
 
-function newEmptyGameState() {
-  return {
-    powerups: {
-      morphball: {
-        taken: false,
-        equipped: false
-      },
-      bombs: {
-        taken: false,
-        equipped: false
-      },
-      longbeam: {
-        taken: false,
-        equipped: false
-      },
-      wavebeam: {
-        taken: false,
-        equipped: false
-      },
-      icebeam: {
-        taken: false,
-        equipped: false
-      },
-      screwattack: {
-        taken: false,
-        equipped: false
-      },
-      variasuit: {
-        taken: false,
-        equipped: false
-      },
-      hijumpboots: {
-        taken: false,
-        equipped: false
-      }
-    },
-    items: {
-      brinstar: {
-        missileContainers: [false, false],
-        energyTanks: [false, false, false],
-        doors: [false, false, false, false, false]
-      },
-      tourian: {
-        doors: [false, false, false]
-      },
-      norfair: {
-        missileContainers: [false, false, false, false, false, false, false, false, false, false, false, false],
-        energyTanks: [false],
-        doors: [false, false, false, false]
-      },
-      ridley: {
-        missileContainers: [false, false, false],
-        energyTanks: [false, false],
-        doors: [false, false]
-      },
-      kraid: {
-        missileContainers: [false, false, false, false],
-        doors: [false, false, false, false, false]
-      }
-    },
-    missiles: 0
-  };
-}
-
 class GameState extends Component {
   constructor(props) {
     super(props);
-    this.state = newEmptyGameState();
+    this.state = {
+      gameState: props.state
+    };
   }
 
   render() {
@@ -79,13 +17,13 @@ class GameState extends Component {
       <div className="GameState">
         <div className="GameState-row">
           <div className="GameState-column">
-            <PowerUpList powerups={this.state.powerups} />
+            <PowerUpList powerups={this.state.gameState.powerups} />
           </div>
           <div className="GameState-column">
-            <Items items={this.state.items} />
+            <Items items={this.state.gameState.items} />
           </div>
           <div className="GameState-column">
-            <MissileCount count={this.state.missiles} />
+            <MissileCount count={this.state.gameState.missiles} />
           </div>
         </div>
       </div>
