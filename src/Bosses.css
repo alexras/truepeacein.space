@@ -1,0 +1,7 @@
+.Bosses-alive {
+
+}
+
+.Bosses-dead {
+    filter: grayscale(100%) opacity(60%);
+}

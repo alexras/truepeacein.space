@@ -3,6 +3,12 @@
     display: block;
 }
 
+.MissileCount-container {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
 .MissileCount-icon {
     float: left;
 }

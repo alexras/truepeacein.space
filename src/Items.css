@@ -7,7 +7,7 @@
     filter: grayscale(100%) opacity(60%);
 }
 
-.Items-list {
+.Items .Items-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
