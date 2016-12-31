@@ -5,14 +5,9 @@ import missiletank from './images/missile-tank.png';
 import energytank from './images/energy-tank.png';
 
 class ItemsForArea extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props.status;
-  }
-
   render() {
-    const missiles = this.state.missileContainers;
-    const energyTanks = this.state.energyTanks;
+    const missiles = this.props.status.missileContainers;
+    const energyTanks = this.props.status.energyTanks;
     //  var doors = props.status.doors;
 
     var sections = [];
@@ -60,19 +55,14 @@ class ItemsForArea extends Component {
 }
 
 class Items extends Component {
-  constructor(props) {
-    super(props);
-    this.state = props.items;
-  }
-
   render() {
     return (
       <div className="Items">
         <h3>Items</h3>
-        <ItemsForArea areaName="Brinstar" status={this.state.brinstar} />
-        <ItemsForArea areaName="Norfair" status={this.state.norfair} />
-        <ItemsForArea areaName="Ridley's Lair" status={this.state.ridley} />
-        <ItemsForArea areaName="Kraid's Lair" status={this.state.kraid} />
+        <ItemsForArea areaName="Brinstar" status={this.props.items.brinstar} />
+        <ItemsForArea areaName="Norfair" status={this.props.items.norfair} />
+        <ItemsForArea areaName="Ridley's Lair" status={this.props.items.ridley} />
+        <ItemsForArea areaName="Kraid's Lair" status={this.props.items.kraid} />
       </div>
     );
   }

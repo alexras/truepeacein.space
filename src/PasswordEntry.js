@@ -24,18 +24,20 @@ class PasswordEntry extends Component {
   }
 
   handleChange(event) {
+    var passwordString = event.target.value;
     this.setState({
-      passwordString: event.target.value
+      passwordString: passwordString
     });
 
-    if (event.target.value.length === 24) {
-      var passwordBuffer = passwordStringToGameState(event.target.value);
-      var passwordJson = gameStateToJSON(passwordBuffer);
-
+    if (passwordString.length === 24) {
+      var passwordBuffer = passwordStringToGameState(passwordString);
+      var gameStateJson = gameStateToJSON(passwordBuffer);
       this.setState({
         passwordBuffer: passwordBuffer,
-        passwordJson: passwordJson
+        passwordJson: gameStateJson
       });
+
+      this.props.onChange(gameStateJson);
     }
   }
 }

@@ -12,6 +12,14 @@ class App extends Component {
     this.state = {
       gameState: newEmptyGameStateJSON()
     };
+
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+  }
+
+  handlePasswordChange(newGameState) {
+    this.setState({
+      gameState: newGameState
+    });
   }
 
   render() {
@@ -21,8 +29,8 @@ class App extends Component {
           <h2 className="password-uppercase">NARPASSWORD</h2>
           <h3 className="password-lowercase">metroid password generator</h3>
         </div>
-        <PasswordEntry />
-        <GameState state={this.state.gameState}/>
+        <PasswordEntry onChange={this.handlePasswordChange} />
+        <GameState gameState={this.state.gameState} />
       </div>
     );
   }
