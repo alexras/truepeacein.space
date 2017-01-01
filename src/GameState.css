@@ -2,8 +2,10 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    justify-content: center;
 }
 
 .GameState .column {
+    min-width: 300px;
     flex-grow: 1;
 }

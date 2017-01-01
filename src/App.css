@@ -8,18 +8,44 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    align-content: center;
-    width: 100%;
+    justify-content: center;
 }
 
 .App-header {
     height: 100px;
     padding: 20px;
     font-family: 'narpassword00000_fixed.normal';
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
-h2,h3 {
+.App-header .headerText {
     text-align: center;
+    min-width: 375px;
+}
+
+.App-header .headerText h2 {
     text-transform: uppercase;
     font-family: 'narpassword00000_fixed.normal';
+}
+
+.App-header .headerText h3 {
+    text-transform: uppercase;
+    font-family: 'narpassword00000_fixed.normal';
+    margin: 0px;
+}
+
+.App-header img {
+    margin: 0px 15px;
+    height: 80px;
+}
+
+.flipX {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }

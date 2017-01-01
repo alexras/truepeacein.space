@@ -9,6 +9,10 @@
     flex-flow: column;
 }
 
+.MissileCount h3 {
+    text-align: center;
+}
+
 .MissileCount-icon {
     float: left;
 }

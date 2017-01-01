@@ -4,13 +4,13 @@ import './fonts.css';
 import GameState from './GameState';
 import PasswordEntry from './PasswordEntry';
 
-import { newEmptyGameStateJSON } from './password-utils.js';
+import { gameStateToJSON, passwordStringToGameState } from './password-utils.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameState: newEmptyGameStateJSON()
+      gameState: gameStateToJSON(passwordStringToGameState('JUSTINBAILEY------------'))
     };
 
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -26,8 +26,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2 className="password-uppercase">NARPASSWORD</h2>
-          <h3 className="password-lowercase">metroid password generator</h3>
+          <div className="headerText">
+            <h2 className="password-uppercase">NARPASSWORD</h2>
+            <h3 className="password-lowercase">metroid password generator</h3>
+          </div>
         </div>
         <PasswordEntry onChange={this.handlePasswordChange} />
         <GameState gameState={this.state.gameState} />
