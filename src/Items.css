@@ -1,6 +1,55 @@
 .Items {
     font-family: 'narpassword00000_fixed.normal';
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Items .itemList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Items h3,h4 {
+    flex-basis: 100%;
+}
+
+.Items .itemList .Items-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 300px;
+}
+
+.Items .itemList .Items-list .item {
+    flex-shrink: 1;
+    text-align: center;
+}
+
+.Items .itemList .Items-list .item img {
+    width: 48px;
+}
+
+.Items .itemList .Items-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 300px;
+}
+
+.Items .itemList .Items-list .item {
+    flex-shrink: 1;
+    text-align: center;
+    flex-basis: 55px;
+}
+
+.Items .itemList .Items-list .item img {
+    width: 48px;
 }
 
 .Items .item-missing {
@@ -9,10 +58,4 @@
 
 .Items .Items-list {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.Items-list .item {
-    flex-basis: 80px;
 }

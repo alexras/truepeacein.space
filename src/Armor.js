@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Armor.css';
 import spacesuit from './images/spacesuit.png';
 import swimsuit from './images/swimsuit.png';
 

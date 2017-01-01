@@ -11,23 +11,22 @@ import screwattack from './images/screw-attack.png';
 import variasuit from './images/varia-suit.png';
 import hijumpboots from './images/hi-jump-boots.png';
 
-class PowerUpListRow extends Component {
+class PowerUp extends Component {
   render() {
+    var powerUpStatusTmp;
+
+    if (this.props.status.equipped) {
+      powerUpStatusTmp = 'PowerUpList-equipped';
+    } else if (this.props.status.taken) {
+      powerUpStatusTmp = 'PowerUpList-inaccessible';
+    } else {
+      powerUpStatusTmp = 'PowerUpList-available';
+    }
+
+    const powerUpStatus = powerUpStatusTmp;
+
     return (
-      <tr className='PowerUpList-tableRow'>
-        <td className='PowerUpList-icon'>
-          <img src={this.props.icon} role="presentation"/>
-        </td>
-        <td className='PowerUpList-name'>
-          { this.props.name }
-        </td>
-        <td className='PowerUpList-taken'>
-          { this.props.status.taken ? "Yes" : "No" }
-        </td>
-        <td className='PowerUpList-equipped'>
-          { this.props.status.equipped ? "Yes" : "No" }
-        </td>
-      </tr>
+      <img src={this.props.icon} role="presentation" className={powerUpStatus}/>
     );
   }
 }
@@ -37,26 +36,16 @@ class PowerUpList extends Component {
     return (
       <div className="PowerUpList">
         <h3>Power-Ups</h3>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th className='PowerUpList-tableHeader'>TAKEN</th>
-              <th className='PowerUpList-tableHeader'>EQUIPPED</th>
-            </tr>
-          </thead>
-          <tbody>
-            <PowerUpListRow icon={morphball} name={"Maru Mari"} status={this.props.powerups.morphball} />
-            <PowerUpListRow icon={bombs} name={"Bombs"} status={this.props.powerups.bombs} />
-            <PowerUpListRow icon={longbeam} name={"Long Beam"} status={this.props.powerups.longbeam} />
-            <PowerUpListRow icon={wavebeam} name={"Wave Beam"} status={this.props.powerups.wavebeam} />
-            <PowerUpListRow icon={icebeam} name={"Ice Beam"} status={this.props.powerups.icebeam} />
-            <PowerUpListRow icon={screwattack} name={"Screw Attack"} status={this.props.powerups.screwattack} />
-            <PowerUpListRow icon={variasuit} name={"Varia Suit"} status={this.props.powerups.variasuit} />
-            <PowerUpListRow icon={hijumpboots} name={"Hi-Jump Boots"} status={this.props.powerups.hijumpboots} />
-          </tbody>
-        </table>
+        <div className="icons">
+          <PowerUp icon={morphball} name={"Maru Mari"} status={this.props.powerups.morphball} />
+          <PowerUp icon={bombs} name={"Bombs"} status={this.props.powerups.bombs} />
+          <PowerUp icon={hijumpboots} name={"Hi-Jump Boots"} status={this.props.powerups.hijumpboots} />
+          <PowerUp icon={variasuit} name={"Varia Suit"} status={this.props.powerups.variasuit} />
+          <PowerUp icon={screwattack} name={"Screw Attack"} status={this.props.powerups.screwattack} />
+          <PowerUp icon={longbeam} name={"Long Beam"} status={this.props.powerups.longbeam} />
+          <PowerUp icon={wavebeam} name={"Wave Beam"} status={this.props.powerups.wavebeam} />
+          <PowerUp icon={icebeam} name={"Ice Beam"} status={this.props.powerups.icebeam} />
+        </div>
       </div>
     );
   }

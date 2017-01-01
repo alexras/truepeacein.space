@@ -1,12 +1,9 @@
-.GameState-row {
+.GameState {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    flex-direction: row;
 }
 
-.GameState-column {
-    flex-shrink: 1;
-    display: flex;
-    flex-flow: column;
-    flex-basis: 33%;
+.GameState .column {
+    flex-grow: 1;
 }

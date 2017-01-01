@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './StartLocation.css';
 
 class StartLocation extends Component {
   render() {

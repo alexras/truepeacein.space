@@ -1,20 +1,28 @@
 .PowerUpList {
     font-family: 'narpassword00000_fixed.normal';
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
-.PowerUpList-icon {
-    width: 80px;
+.PowerUpList h3 {
+    flex-basis: 100%;
 }
 
-.PowerUpList-name {
-    text-align: left;
+.PowerUpList .images {
+    flex-basis: 100%;
 }
 
-.PowerUpList-taken {
-    width: 100px;
+.PowerUpList img {
+    width: 48px;
 }
 
-.PowerUpList-equipped {
-    width: 100px;
+.PowerUpList-available {
+    filter: opacity(40%) grayscale(40%);
+}
+
+.PowerUpList-inaccessible {
+    filter: grayscale(100%) opacity(60%);
 }

@@ -1,7 +1,41 @@
-.Bosses-alive {
-
+.Bosses dead {
+    filter: grayscale(100%) opacity(60%);
 }
 
-.Bosses-dead {
-    filter: grayscale(100%) opacity(60%);
+.Bosses {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: space-between;
+}
+
+.Bosses h3 {
+    flex-basis: 100%;
+}
+
+.Bosses .minibosses img {
+    margin: 0px 5px;
+    height: 64px;
+}
+
+.Bosses .ridley img {
+    height: 64px;
+}
+
+.Bosses .motherBrainContainer {
+    display: flex;
+    align-items: center;
+}
+
+.Bosses .motherBrainContainer img {
+    margin: 0px 5px;
+}
+
+.Bosses .motherBrain {
+    height: 130px;
+}
+
+.Bosses .zebetite {
+    height: 122px;
 }

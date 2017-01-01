@@ -1,0 +1,8 @@
+.StartLocation {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    flex-wrap: wrap;
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+}

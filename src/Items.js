@@ -21,7 +21,7 @@ class MissileContainers extends Component {
     }.bind(this));
 
     return (
-      <div key="Items-sections-missiles">
+      <div key="Items-sections-missiles" className="itemList">
         <h4>Missile Containers</h4>
         <div className="Items-list">
           {missileDivs}
@@ -46,7 +46,7 @@ class EnergyTanks extends Component {
     }.bind(this));
 
     return (
-      <div key="Items-section-etanks">
+      <div key="Items-section-etanks" className="itemList">
         <h4>Energy Tanks</h4>
         <div className="Items-list">
           {energyTankDivs}
