@@ -6,6 +6,7 @@ import Items from './Items';
 import StartLocation from './StartLocation';
 import Bosses from './Bosses';
 import Armor from './Armor';
+import Doors from './Doors';
 
 class GameState extends Component {
   render() {
@@ -14,6 +15,7 @@ class GameState extends Component {
         <div className="column">
           <PowerUpList powerups={this.props.gameState.powerups} />
           <Bosses killed={this.props.gameState.bossesKilled} zebetites={this.props.gameState.items.tourian.zebetites} />
+          <Doors items={this.props.gameState.items} />
         </div>
         <div className="column">
           <Items items={this.props.gameState.items} />

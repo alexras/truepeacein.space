@@ -1,0 +1,26 @@
+.Doors {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.Doors h4,h5 {
+    text-transform: uppercase;
+    font-family: 'narpassword00000_fixed.normal';
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.Doors .doorsForArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 33%;
+}
+
+.Doors .doorsForArea .doorList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
