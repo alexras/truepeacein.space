@@ -31,6 +31,24 @@ function passwordStringToMetroidAlphabet(passwordString) {
   return passwordBytes;
 }
 
+function metroidAlphabetCharsToPasswordString(metroidAlphaChars) {
+  var passwordString = [];
+
+  for (var i = 0; i < metroidAlphaChars.length; i++) {
+    var currentChar = metroidAlphaChars[i];
+
+    if (currentChar === 255) {
+      passwordString.push(' ');
+    } else if (currentChar < 0 || currentChar > 63) {
+      throw new Error('Invalid Metroid alphabet character ' + currentChar + ' at position ' + i);
+    } else {
+      passwordString.push(METROID_ALPHABET.charAt(currentChar));
+    }
+  }
+
+  return passwordString.join('');
+}
+
 function passwordBytesToBlocks(passwordBytes) {
   var passwordBlocks = [];
 
@@ -42,6 +60,20 @@ function passwordBytesToBlocks(passwordBytes) {
   }
 
   return new Uint8Array(passwordBlocks);
+}
+
+function passwordBlocksToBytes(passwordBlocks) {
+  var passwordBytes = [];
+
+  for (var i = 0; i < 6; i++) {
+    var startIndex = i * 3;
+    passwordBytes.push(passwordBlocks[startIndex] >> 2);
+    passwordBytes.push(((passwordBlocks[startIndex] & 0x3) << 4) | (passwordBlocks[startIndex + 1] >> 4));
+    passwordBytes.push(((passwordBlocks[startIndex + 1] & 0xf) << 2) | (passwordBlocks[startIndex + 2] >> 6));
+    passwordBytes.push(passwordBlocks[startIndex + 2] & 0x3f);
+  }
+
+  return passwordBytes;
 }
 
 // Note to self; this comes from GPLv3 code (mpg v1.0a), so we'll have to set the license accordingly
@@ -67,16 +99,66 @@ function rotateLeft(passwordBlocks) {
   }
 }
 
-function validateChecksum(passwordBlocks) {
+function rotateRight(passwordBlocks) {
+  var carry = 1;
+  var carryTemp;
+  var rotateAmount = passwordBlocks[SHIFT_BYTE];
+
+  for (var i = 0; i < rotateAmount; i++) {
+    var temp = passwordBlocks[0];
+
+    for (var j = 0; j < 16; j++) {
+      carryTemp = passwordBlocks[j] & 0x1;
+      passwordBlocks[j] = (passwordBlocks[j] >> 1) | ((carry & 0x1) << 7);
+      carry = carryTemp;
+    }
+
+    carryTemp = temp & 0x1;
+    temp = (temp >> 1) | ((carry & 0x1) << 7);
+    carry = carryTemp;
+    passwordBlocks[0] = temp;
+  }
+}
+
+function calculateChecksum(passwordBlocks) {
   var checksum = 0;
 
   for (var i = 16; i >= 0; i--) {
     checksum = (checksum + passwordBlocks[i]) % 256;
   }
 
+  return checksum;
+}
+
+export function validateChecksum(passwordBlocks) {
+  var checksum = calculateChecksum(passwordBlocks);
+
   if (checksum !== passwordBlocks[CHECKSUM_BYTE]) {
     throw new Error("Expected checksum (" + checksum.toString(2) + ") to match password's checksum byte (" + passwordBlocks[CHECKSUM_BYTE].toString(2) + ")");
   }
+}
+
+export function fixChecksum(passwordBlocks) {
+  // Fix the game state's checksum
+  var checksum = calculateChecksum(passwordBlocks);
+  passwordBlocks[CHECKSUM_BYTE] = checksum;
+}
+
+export function gameStateToPasswordString(gameState) {
+  var passwordBlocks = gameState.slice(0);
+
+  fixChecksum(passwordBlocks);
+
+  // Encode the password data according to its shift byte
+  rotateRight(passwordBlocks);
+
+  // Decompress it from 18 bytes to 24
+  var passwordBytes = passwordBlocksToBytes(passwordBlocks);
+
+  // Convert it into something human-readable
+  var passwordString = metroidAlphabetCharsToPasswordString(passwordBytes);
+
+  return passwordString;
 }
 
 export function passwordStringToGameState(passwordString) {
@@ -87,9 +169,6 @@ export function passwordStringToGameState(passwordString) {
 
   // Use the shift byte to decode the password data
   rotateLeft(passwordBlocks);
-
-  // Validate checksum
-  validateChecksum(passwordBlocks);
 
   return passwordBlocks;
 }
