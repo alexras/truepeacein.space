@@ -6,32 +6,25 @@ var CHECKSUM_BYTE = 17;
 
 var EMPTY_BLOCKS = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
+var METROID_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?-';
+
 // Convert characters to "Metroid Alphabet" (0-63 + 255)
 function passwordStringToMetroidAlphabet(passwordString) {
   var passwordBytes = [];
 
   for (var i = 0; i < passwordString.length; i++) {
-    var currentCharCode = passwordString.charCodeAt(i);
+    var currentChar = passwordString.charAt(i);
 
-    if (currentCharCode === 32) {
-      // Spaces are encoded as 255
+    if (currentChar === ' ') {
       passwordBytes.push(255);
-    } else if (currentCharCode >= 48 && currentCharCode <= 57) {
-      // Characters 0 to 9 come first, getting the byte values 0-9
-      passwordBytes.push(currentCharCode - 48);
-    } else if (currentCharCode >= 65 && currentCharCode <= 90) {
-      // Next comes A-Z, with values 10-35
-      passwordBytes.push(currentCharCode - 55);
-    } else if (currentCharCode >= 97 && currentCharCode <= 122) {
-      // Then comes a-z, with values 36-61
-      passwordBytes.push(currentCharCode - 61);
-    } else if (currentCharCode === 63) {
-      // Finally come ? and -, with values 62 and 63
-      passwordBytes.push(62);
-    } else if (currentCharCode === 45) {
-      passwordBytes.push(63);
     } else {
-      throw new Error('Invalid character code "' + currentCharCode + '" at position "' + i + '" in password string');
+      var metroidAlphaChar = METROID_ALPHABET.indexOf(currentChar);
+
+      if (metroidAlphaChar === -1) {
+        throw new Error('Invalid character "' + currentChar + '" at position "' + i + '" in password string');
+      } else {
+        passwordBytes.push(metroidAlphaChar);
+      }
     }
   }
 
