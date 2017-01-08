@@ -21,6 +21,20 @@ class BitBuffer {
     return Boolean(this._arr[byte] & (1 << (bit % 8)));
   }
 
+  getBits(bits) {
+    if (!bits.length) {
+      throw new Error('Must provide bits to set as an array');
+    }
+
+    var values = [];
+
+    bits.forEach(function(bit) {
+      values.push(this.getBit(bit));
+    }.bind(this));
+
+    return values;
+  }
+
   setBit(bit, value) {
     if (bit === undefined || bit === null) {
       throw new Error('Must provide a bit index to set');

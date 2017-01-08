@@ -127,6 +127,25 @@ describe('setBit', () => {
   });
 });
 
+describe('getBits', () => {
+  it('should get multiple bits that are defined in order', () => {
+    var buf = new BitBuffer(new Uint8Array([0xad]));
+    expect(buf.getBits([1, 2, 5])).toEqual([false, true, true]);
+  });
+
+  it('should get multiple bits that are defined out of order', () => {
+    var buf = new BitBuffer(new Uint8Array([0xad]));
+    expect(buf.getBits([5, 1, 2])).toEqual([true, false, true]);
+  });
+
+  it('should throw if the bits to get are not passed as an array', () => {
+    var buf = new BitBuffer(new Uint8Array([0x08]));
+    expect(() => {
+      buf.getBits(24, [true]);
+    }).toThrowError(/as an array/);
+  });
+});
+
 describe('setBits', () => {
   it('should set multiple bits that are defined in order', () => {
     var buf = new BitBuffer(new Uint8Array([0x08]));

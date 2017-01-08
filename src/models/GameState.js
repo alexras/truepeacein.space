@@ -2,8 +2,9 @@ import Items from './Items';
 import PowerUps from './PowerUps';
 import BossesKilled from './BossesKilled';
 import MinibossStatueState from './MinibossStatueState';
+import GameAge from './GameAge';
 
-var MISSILE_COUNT_BLOCK = 10;
+var MISSILE_COUNT_BYTE = 10;
 
 var START_IN_NORFAIR_BIT = 64;
 var START_IN_KRAID_BIT = 65;
@@ -25,24 +26,30 @@ var VALID_START_LOCATIONS = [
   START_LOCATION_TOURIAN
 ];
 
-var GAME_AGE_START_BYTE = 11;
-var GAME_AGE_END_BYTE = 14;
-
-class GameStateStruct {
+class GameState {
   constructor(buffer) {
     this._buffer = buffer;
     this.powerups = new PowerUps(buffer);
     this.items = new Items(buffer);
     this.bossesKilled = new BossesKilled();
     this.statuesRaised = new MinibossStatueState();
+    this.gameAge = new GameAge(buffer);
   }
 
   get missiles() {
-    return this._buffer.getBlock(MISSILE_COUNT_BLOCK);
+    return this._buffer.getByte(MISSILE_COUNT_BYTE);
   }
 
   set missiles(missileCount) {
-    this._buffer.setBlock(MISSILE_COUNT_BLOCK, missileCount);
+    if (missileCount < 0) {
+      throw new Error('Missile count cannot be negative');
+    }
+
+    if (missileCount > 255) {
+      throw new Error('Missile count cannot exceed 255');
+    }
+
+    this._buffer.setByte(MISSILE_COUNT_BYTE, missileCount);
   }
 
   get startLocation() {
@@ -66,7 +73,7 @@ class GameStateStruct {
 
     switch (location) {
       case START_LOCATION_BRINSTAR:
-        this._buffer.setBits(bitsToSet, [true, true, true]);
+        this._buffer.setBits(bitsToSet, [false, false, false]);
         break;
       case START_LOCATION_NORFAIR:
         this._buffer.setBits(bitsToSet, [true, false, false]);
@@ -84,7 +91,6 @@ class GameStateStruct {
         throw new Error('Invalid start location "' + location + '"');
         break;
     }
-
   }
 
   get reset() {
@@ -98,29 +104,6 @@ class GameStateStruct {
   set swimsuit(swimsuitOn) {
     this._buffer.setBit(SWIMSUIT_BIT, true);
   }
-
-  get gameAge() {
-    var gameAgeInTicks = 0;
-    var gameAgeBlocks = this._buffer.getBlocks(GAME_AGE_START_BYTE, GAME_AGE_END_BYTE);
-
-    gameAgeBlocks.forEach(function(block) {
-      gameAgeInTicks += block;
-      gameAgeInTicks <<= 8;
-    });
-  }
-
-  set gameAge(gameAgeInTicks) {
-    var gameAgeBlocks = [];
-
-    var gameAgeTmp = gameAgeInTicks;
-
-    for (var i = 0; i < 4; i++) {
-      gameAgeBlocks.push(gameAgeTmp & 0xff);
-      gameAgeTmp >>= 8;
-    }
-
-    this._buffer.setBlocks(GAME_AGE_START_BYTE, GAME_AGE_END_BYTE, gameAgeBlocks);
-  }
 }
 
-export default GameStateStruct;
+export default GameState;
