@@ -343,3 +343,40 @@ describe('setBytes', () => {
     }).toThrowError(/must be numbers/);
   });
 });
+
+describe('checksum methods', () => {
+  describe('buffer with a valid checksum', () => {
+    var buf = BitBuffer.newEmptyBuffer();
+    buf.setByte(6, 240);
+    buf.setByte(8, 60);
+    buf.setByte(17, 44);
+
+    it('should validate', () => {
+      expect(() => {
+        buf.validateChecksum();
+      }).not.toThrow();
+    });
+
+    it('should not change when fixed', () => {
+      buf.fixChecksum();
+      expect(buf.getByte(17)).toBe(44);
+    });
+  });
+
+  describe('buffer with an invalid checksum', () => {
+    var buf = BitBuffer.newEmptyBuffer();
+    buf.setByte(6, 20);
+    buf.setByte(17, 30);
+
+    it('should not validate', () => {
+      expect(() => {
+        buf.validateChecksum();
+      }).toThrowError(/expected checksum/i);
+    });
+
+    it('should be correct once fixed', () => {
+      buf.fixChecksum();
+      expect(buf.getByte(17)).toBe(20);
+    });
+  });
+});

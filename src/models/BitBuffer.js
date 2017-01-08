@@ -1,3 +1,5 @@
+var CHECKSUM_BYTE = 17;
+
 class BitBuffer {
   constructor(arr) {
     this._arr = arr;
@@ -139,6 +141,29 @@ class BitBuffer {
 
   setByte(byteNumber, value) {
     this.setBytes(byteNumber, byteNumber, [value]);
+  }
+
+  _calculateChecksum() {
+    var checksum = 0;
+
+    for (var i = 16; i >= 0; i--) {
+      checksum = (checksum + this._arr[i]) % 256;
+    }
+
+    return checksum;
+  }
+
+  validateChecksum() {
+    var checksum = this._calculateChecksum();
+
+    if (checksum !== this._arr[CHECKSUM_BYTE]) {
+      throw new Error("Expected checksum (" + checksum.toString(2) + ") to match password's checksum byte (" + this._arr[CHECKSUM_BYTE].toString(2) + ")");
+    }
+  }
+
+  fixChecksum() {
+    var checksum = this._calculateChecksum();
+    this._arr[CHECKSUM_BYTE] = checksum;
   }
 
   static newEmptyBuffer() {
