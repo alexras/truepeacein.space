@@ -4,48 +4,127 @@ class BitBuffer {
   }
 
   getBit(bit) {
-    var block = Math.floor(bit / 8);
+    if (bit === undefined || bit === null) {
+      throw new Error('Must provide a bit index to get');
+    }
 
-    return Boolean(this._arr[block] & (1 << (bit % 8)));
+    if ((bit < 0) || (bit > this._arr.length * 8 - 1)) {
+      throw new Error('Bit index ' + bit + ' out-of-bounds');
+    }
+
+    if (isNaN(bit)) {
+      throw new Error('Argument must be a number; got ' + bit);
+    }
+
+    var byte = Math.floor(bit / 8);
+
+    return Boolean(this._arr[byte] & (1 << (bit % 8)));
   }
 
   setBit(bit, value) {
-    var block = Math.floor(bit / 8);
+    if (bit === undefined || bit === null) {
+      throw new Error('Must provide a bit index to set');
+    }
+
+    if ((bit < 0) || (bit > this._arr.length * 8 - 1)) {
+      throw new Error('Bit index ' + bit + ' out-of-bounds');
+    }
+
+    if (isNaN(bit)) {
+      throw new Error('Argument must be a number; got ' + bit);
+    }
+
+
+    var byte = Math.floor(bit / 8);
 
     if (value) {
-      this._arr[block] = this._arr[block] | (1 << (bit % 8));
+      this._arr[byte] = this._arr[byte] | (1 << (bit % 8));
     } else {
-      this._arr[block] = this._arr[block] & ~(1 << (bit % 8));
+      this._arr[byte] = this._arr[byte] & ~(1 << (bit % 8));
     }
   }
 
   setBits(bits, values) {
-    bits.forEach(function(bit, index) {
-      this.setBit(bit, values[index]);
-    });
-  }
-
-  getBlocks(startBlock, endBlock) {
-    return this._arr.slice(startBlock, endBlock + 1);
-  }
-
-  setBlocks(startBlock, endBlock, blockContents) {
-    if (blockContents.length !== endBlock - startBlock + 1) {
-      throw new Error('Size of contents (' + blockContents.length +
-                      ') does not match block range ([' + startBlock + ', ' + endBlock + '])');
+    if (!bits.length) {
+      throw new Error('Must provide bits to set as an array');
     }
 
-    blockContents.forEach(function(block, index) {
-      this._arr[startBlock + index] = block;
+    if (!values.length) {
+      throw new Error('Must provide bits to set as an array');
+    }
+
+    if (bits.length !== values.length) {
+      throw new Error('Length of bit indices (' + bits.length + ') and values (' +
+                      values.length + ') do not match');
+    }
+
+    bits.forEach(function(bit, index) {
+      this.setBit(bit, values[index]);
+    }.bind(this));
+  }
+
+  _validateByteRange(startByte, endByte) {
+    if (startByte === null || startByte === undefined || isNaN(startByte)) {
+      throw new Error('Start byte must be a number');
+    }
+
+    if (endByte === null || endByte === undefined || isNaN(endByte)) {
+      throw new Error('End byte must be a number');
+    }
+
+    if (startByte < 0 || startByte > this._arr.length - 1) {
+      throw new Error('Start byte ' + startByte + ' out-of-bounds');
+    }
+
+    if (endByte < 0 || endByte > this._arr.length - 1) {
+      throw new Error('End byte ' + endByte + ' out-of-bounds');
+    }
+
+    if (startByte > endByte) {
+      throw new Error('Start byte must be greater-than or equal to end byte');
+    }
+
+  }
+
+  getBytes(startByte, endByte) {
+    this._validateByteRange(startByte, endByte);
+    return this._arr.slice(startByte, endByte + 1);
+  }
+
+  setBytes(startByte, endByte, byteContents) {
+    this._validateByteRange(startByte, endByte);
+
+    if (!byteContents) {
+      throw new Error('Must provide values to set');
+    }
+
+    if (!byteContents.length) {
+      throw new Error('Must provide values to set as an array');
+    }
+
+    if (byteContents.length !== endByte - startByte + 1) {
+      throw new Error('Size of contents (' + byteContents.length +
+                      ') does not match byte range ([' + startByte + ', ' + endByte + '])');
+    }
+
+    // Validate all bytes before setting any of them to prevent partial updates
+    byteContents.forEach(function(byte) {
+      if (isNaN(byte)) {
+        throw new Error('Values to set must be numbers');
+      }
     });
+
+    byteContents.forEach(function(byte, index) {
+      this._arr[startByte + index] = byte;
+    }.bind(this));
   }
 
-  getBlock(blockNumber) {
-    return this.getBlocks(blockNumber, blockNumber)[0];
+  getByte(byteNumber) {
+    return this.getBytes(byteNumber, byteNumber)[0];
   }
 
-  setBlock(blockNumber, value) {
-    this.setBlocks(blockNumber, blockNumber, [value]);
+  setByte(byteNumber, value) {
+    this.setBytes(byteNumber, byteNumber, [value]);
   }
 }
 
