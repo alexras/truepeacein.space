@@ -126,6 +126,11 @@ class BitBuffer {
   setByte(byteNumber, value) {
     this.setBytes(byteNumber, byteNumber, [value]);
   }
+
+  static newEmptyBuffer() {
+    var EMPTY_BLOCKS = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    return new BitBuffer(new Uint8Array(EMPTY_BLOCKS));
+  }
 }
 
 export default BitBuffer;

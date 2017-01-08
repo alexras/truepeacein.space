@@ -1,24 +1,24 @@
 function defineBufferOffsetGetter(buffer, obj, propName, offset) {
   Object.defineProperty(
     obj, propName, {
+      enumerable: true,
       get: function () {
         return buffer.getBit(offset);
       },
       set: function(newVal) {
-        buffer.setBit(newVal);
+        buffer.setBit(offset, newVal);
       }
     });
 }
 
 class Area {
   constructor(buffer, itemOffsets) {
-
     if (itemOffsets.missileContainers) {
       this.missileContainers = {};
 
       itemOffsets.missileContainers.forEach(function(missileContainerOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.missileContainers, arrayIndex.toString(), missileContainerOffset);
-      });
+      }.bind(this));
     }
 
     if (itemOffsets.energyTanks) {
@@ -26,7 +26,7 @@ class Area {
 
       itemOffsets.energyTanks.forEach(function(energyTankOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.energyTanks, arrayIndex.toString(), energyTankOffset);
-      });
+      }.bind(this));
     }
 
     if (itemOffsets.zebetites) {
@@ -34,15 +34,15 @@ class Area {
 
       itemOffsets.zebetites.forEach(function(zebetiteOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.zebetites, arrayIndex.toString(), zebetiteOffset);
-      });
+      }.bind(this));
     }
 
     if (itemOffsets.doors) {
       this.doors = {};
 
       Object.keys(itemOffsets.doors).forEach(function(doorName) {
-        defineBufferOffsetGetter(buffer, this.energyTanks, doorName, itemOffsets.doors[doorName]);
-      });
+        defineBufferOffsetGetter(buffer, this.doors, doorName, itemOffsets.doors[doorName]);
+      }.bind(this));
     }
   }
 }
