@@ -1,5 +1,3 @@
-import getBit from './utils';
-
 class PowerUp {
   constructor(buffer, equippedIndex, takenIndex) {
     this._buffer = buffer;
@@ -15,14 +13,25 @@ class PowerUp {
     }
   }
 
+  set taken(isTaken) {
+    if (this._takenIndex) {
+      this._buffer.setBit(this._takenIndex, isTaken);
+    } else {
+      throw new Error('Powerup does not have a "taken" flag to set');
+    }
+  }
+
   get equipped() {
     return this._buffer.getBit(this._equippedIndex);
+  }
+
+  set equipped(isEquipped) {
+    this._buffer.setBit(this._equippedIndex, isEquipped);
   }
 }
 
 class PowerUps {
   constructor(buffer) {
-    this.buffer = buffer;
     this.morphball = new PowerUp(buffer, 76, 0);
     this.bombs = new PowerUp(buffer, 72, 6);
     this.longbeam = new PowerUp(buffer, 74);
