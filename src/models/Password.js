@@ -1,10 +1,5 @@
 import BitBuffer from './BitBuffer';
 
-var MISSILE_COUNT_BLOCK = 10;
-var GAME_AGE_START_BYTE = 11;
-var GAME_AGE_END_BYTE = 14;
-var SHIFT_BYTE = 16;
-var CHECKSUM_BYTE = 17;
 var PASSWORD_SIZE_BYTES = 18;
 
 var METROID_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?-';
