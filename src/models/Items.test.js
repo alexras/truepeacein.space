@@ -54,6 +54,40 @@ describe('Item accessor tests', () => {
     it('should write the Long Beam door', () => {
       testWrite('brinstar', 'doors', 'longBeam', 2);
     });
+
+    it('should be able to iterate through the missile containers', () => {
+      var expectedIndex = 0;
+
+      items.brinstar.missileContainers[1] = true;
+
+      var itemCount = 0;
+
+      items.brinstar.missileContainers.forEach((container, index) => {
+        expect(container).toBe(items.brinstar.missileContainers[index]);
+        expect(index).toBe(itemCount);
+        itemCount++;
+      });
+
+      expect(itemCount).toBe(2);
+    });
+
+    it('should be able to iterate through the energy tanks', () => {
+      var items = new Items(BitBuffer.newEmptyBuffer(), jest.fn());
+      var expectedIndex = 0;
+
+      items.brinstar.energyTanks[1] = true;
+      items.brinstar.energyTanks[2] = true;
+
+      var itemCount = 0;
+
+      items.brinstar.energyTanks.forEach((container, index) => {
+        expect(container).toBe(items.brinstar.energyTanks[index]);
+        expect(index).toBe(itemCount);
+        itemCount++;
+      });
+
+      expect(itemCount).toBe(3);
+    });
   });
 
   describe('Norfair', () => {
@@ -93,6 +127,20 @@ describe('Item accessor tests', () => {
 
     it('should write zebetite 2', () => {
       testWrite('tourian', 'zebetites', 2, 55);
+    });
+
+    it('should be able to iterate through the zebetites', () => {
+      items.tourian.zebetites[2] = true;
+      items.tourian.zebetites[4] = true;
+
+      var itemCount = 0;
+      items.tourian.zebetites.forEach((zebetite, index) => {
+        expect(zebetite).toBe(items.tourian.zebetites[index]);
+        expect(index).toBe(itemCount);
+        itemCount++;
+      });
+
+      expect(itemCount).toBe(5);
     });
   });
 });

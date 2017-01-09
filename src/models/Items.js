@@ -12,10 +12,27 @@ function defineBufferOffsetGetter(buffer, obj, propName, offset, onChange) {
     });
 }
 
+function defineForEach(obj) {
+  obj.forEach = (iter) => {
+    var keys = Object.keys(obj).sort();
+
+    keys.forEach((key, index) => {
+      if (!isNaN(key)) {
+        iter(obj[key], index, keys);
+      }
+    });
+
+    Object.keys(obj).forEach((iter, index) => {
+
+    });
+  };
+}
+
 class Area {
   constructor(buffer, itemOffsets, onChange) {
     if (itemOffsets.missileContainers) {
       this.missileContainers = {};
+      defineForEach(this.missileContainers);
 
       itemOffsets.missileContainers.forEach(function(missileContainerOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.missileContainers, arrayIndex.toString(), missileContainerOffset, onChange);
@@ -24,6 +41,7 @@ class Area {
 
     if (itemOffsets.energyTanks) {
       this.energyTanks = {};
+      defineForEach(this.energyTanks);
 
       itemOffsets.energyTanks.forEach(function(energyTankOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.energyTanks, arrayIndex.toString(), energyTankOffset, onChange);
@@ -32,6 +50,7 @@ class Area {
 
     if (itemOffsets.zebetites) {
       this.zebetites = {};
+      defineForEach(this.zebetites);
 
       itemOffsets.zebetites.forEach(function(zebetiteOffset, arrayIndex) {
         defineBufferOffsetGetter(buffer, this.zebetites, arrayIndex.toString(), zebetiteOffset, onChange);
