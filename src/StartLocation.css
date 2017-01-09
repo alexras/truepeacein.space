@@ -6,3 +6,13 @@
     font-family: 'narpassword00000_fixed.normal';
     text-transform: uppercase;
 }
+
+.StartLocation h4 {
+    margin: 2px 0px;
+    font-weight: lighter;
+    color: #aaaaaa;
+}
+
+.StartLocation h4.startLocation {
+    color: #60F234;
+}

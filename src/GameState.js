@@ -22,7 +22,7 @@ class GameState extends Component {
         </div>
         <div className="column">
           <MissileCount count={this.props.gameState.missiles} />
-          <StartLocation location={this.props.gameState.startLocation} />
+          <StartLocation gameState={this.props.gameState} />
           <Armor gameState={this.props.gameState} />
         </div>
       </div>

@@ -2,29 +2,37 @@ import React, { Component } from 'react';
 import './StartLocation.css';
 
 class StartLocation extends Component {
+  constructor(props) {
+    super(props);
+    this.setStartLocation = this.setStartLocation.bind(this);
+  }
+
+  setStartLocation(location) {
+    this.props.gameState.startLocation = location;
+  }
+
   render() {
-    var startLocationTmp;
+    const startLocation = this.props.gameState.startLocation;
 
-    if (this.props.location.norfair) {
-      if (this.props.location.kraidsLair) {
-        startLocationTmp = 'Tourian';
-      } else {
-        startLocationTmp = 'Norfair';
-      }
-    } else if (this.props.location.kraidsLair) {
-      startLocationTmp = "Kraid's Lair";
-    } else if (this.props.location.ridleysLair) {
-      startLocationTmp = "Ridley's Lair";
-    } else {
-      startLocationTmp = 'Brinstar';
-    }
+    const locations = {
+      brinstar: 'Brinstar',
+      norfair: 'Norfair',
+      ridleysLair: "Ridley's Lair",
+      kraidsLair: "Kraid's Lair",
+      tourian: 'Tourian'
+    };
 
-    const startLocation = startLocationTmp;
+    var locationHeaders = Object.keys(locations).map((location) => {
+      var humanReadableLocationName = locations[location];
+      return (<h4 key={location} className={location === startLocation ? "startLocation" : ""} onClick={ function() {
+        this.setStartLocation(location);
+      }.bind(this) }>{humanReadableLocationName}</h4>);
+    });
 
     return (
       <div className="StartLocation">
         <h3>Start Location</h3>
-        <h4>{startLocation}</h4>
+        { locationHeaders }
       </div>
     );
   }
