@@ -6,7 +6,7 @@ class PasswordEntry extends Component {
     super(props);
 
     this.state = {
-      passwordString: ''
+      passwordString: this.props.password.str
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,12 +18,18 @@ class PasswordEntry extends Component {
     return (
       <div className="PasswordEntry">
         <input type="text" pattern="[A-Za-z0-9?\- ]{24}" maxLength="24" value={this.state.passwordString} onChange={this.handleChange} className={this.passwordValid() ? "good" : "bad"}/>
-        <div className="checksum" onClick={this.handleClickChecksumFix}>
-          <span className="checksumChar hash">#</span>
-        <span className={"checksumChar " + (this.passwordValid() ? "good" : "bad")}>{this.passwordValid() ? "✓" : "✗" }</span>
-        </div>
       </div>
     );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    var nextPassword = nextProps.password.str;
+
+    if (nextPassword !== this.state.passwordString) {
+      this.setState({
+        passwordString: nextPassword
+      });
+    }
   }
 
   passwordValid() {
