@@ -101,9 +101,11 @@ class Password {
     }
   }
 
-  fixChecksum() {
+  fixChecksum(signalChange = true) {
     this._buffer.fixChecksum();
-    this._onChange();
+    if (signalChange) {
+      this._onChange();
+    }
   }
 };
 

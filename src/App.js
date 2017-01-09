@@ -30,6 +30,8 @@ class App extends Component {
     const password = this.state.password;
     const gameState = this.state.gameState;
 
+    password.fixChecksum(false);
+
     this.setState({
       gameState: gameState,
       password: password
