@@ -6,6 +6,29 @@ import energytank from './images/energy-tank.png';
 
 var areas = ['norfair', 'brinstar', 'ridley', 'kraid'];
 
+class Item extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.items[this.props.index] = !(this.props.items[this.props.index]);
+  }
+
+  render() {
+    const index = this.props.index;
+    const itemType = this.props.itemType;
+    const img = this.props.img;
+
+    return (
+      <div className='item'>
+        <img alt={itemType + ' ' + (index + 1)} src={img} className={ this.props.items[index] ? "item-acquired" : "item-missing" } onClick={this.handleClick} />
+      </div>
+    );
+  }
+};
+
 class MissileContainers extends Component {
   render() {
     var missileDivs = [];
@@ -15,8 +38,8 @@ class MissileContainers extends Component {
 
       if (missiles) {
         missiles.forEach(function(missile, index) {
-          missileDivs.push(<div key={"missile-" + areaName + "-" + index} className="item"><img alt={'Energy Tank ' + (index + 1)} key={'missile-' + index } src={missiletank} className={ missile ? "item-acquired" : "item-missing" } /></div>);
-        });
+          missileDivs.push(<Item key={'missileContainers-' + areaName + '-' + index} items={this.props.items[areaName].missileContainers} itemType='Missile Container' index={index} img={missiletank} />);
+        }.bind(this));
       }
     }.bind(this));
 
@@ -40,8 +63,8 @@ class EnergyTanks extends Component {
 
       if (energyTanks) {
         energyTanks.forEach(function(energyTank, index) {
-          energyTankDivs.push(<div key={"etank-" + areaName + "-" + index} className="item"><img alt={'Energy Tank ' + (index + 1)} key={'etank-' + index } src={energytank} className={energyTank ? "item-acquired" : "item-missing" } /></div>);
-        });
+          energyTankDivs.push(<Item key={'energyTanks-' + areaName + '-' + index} items={this.props.items[areaName].energyTanks} itemType='Energy Tank' index={index} img={energytank} />);
+        }.bind(this));
       }
     }.bind(this));
 
