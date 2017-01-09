@@ -380,3 +380,67 @@ describe('checksum methods', () => {
     });
   });
 });
+
+describe('bit shifting', () => {
+  function testShift(amount, direction, expected) {
+    it('should shift ' + direction + ' by ' + amount, () => {
+      buf.setByte(16, amount);
+      var before = buf.getBytes(0, 16);
+
+      if (direction === 'left') {
+        buf.rotateLeft();
+      } else {
+        buf.rotateRight();
+      }
+
+      expect(buf.getBytes(0, 16)).toEqual(new Uint8Array(expected));
+
+      if (direction === 'left') {
+        buf.rotateRight();
+      } else {
+        buf.rotateLeft();
+      }
+
+      expect(buf.getBytes(0, 16)).toEqual(new Uint8Array(before));
+    });
+  }
+
+  var buf;
+  describe('shift 0x1', () => {
+    beforeEach(() => {
+      buf = BitBuffer.newEmptyBuffer();
+      buf.setBit(0, true);
+      expect(buf.getBytes(0, 15)).toEqual(new Uint8Array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+    });
+
+    testShift(1, 'left', [0x2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+    testShift(10, 'left', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x4, 10]);
+    testShift(1, 'right', [0, 0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+    testShift(10, 'right', [0, 0, 0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10]);
+  });
+
+  describe('shift 0x80', () => {
+    beforeEach(() => {
+      buf = BitBuffer.newEmptyBuffer();
+      buf.setBit(7, true);
+      expect(buf.getBytes(0, 15)).toEqual(new Uint8Array([0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+    });
+
+    testShift(1, 'left', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x1, 1]);
+    testShift(10, 'left', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2, 0, 10]);
+    testShift(1, 'right', [0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+    testShift(10, 'right', [0, 0x20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10]);
+  });
+
+  describe('shift 0x41 0xdb 0xca', () => {
+    beforeEach(() => {
+      buf = BitBuffer.newEmptyBuffer();
+      buf.setBytes(0, 2, [0x41, 0xdb, 0xca]);
+      expect(buf.getBytes(0, 15)).toEqual(new Uint8Array([0x41, 0xdb, 0xca, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+    });
+
+    testShift(1, 'left', [0x83, 0xb7, 0x94, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+    testShift(8, 'left', [0xdb, 0xca, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x41, 8]);
+    testShift(13, 'left', [0x79, 0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x8, 0x3b, 13]);
+  });
+});

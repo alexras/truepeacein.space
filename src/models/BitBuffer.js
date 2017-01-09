@@ -1,3 +1,4 @@
+var SHIFT_BYTE = 16;
 var CHECKSUM_BYTE = 17;
 
 class BitBuffer {
@@ -169,6 +170,50 @@ class BitBuffer {
   static newEmptyBuffer() {
     var EMPTY_BLOCKS = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     return new BitBuffer(new Uint8Array(EMPTY_BLOCKS));
+  }
+
+  // Note to self; this comes from GPLv3 code (mpg v1.0a), so we'll have to set the license accordingly
+  rotateLeft() {
+    var carry = 1;
+    var carryTemp;
+    var rotateAmount = this._arr[SHIFT_BYTE];
+
+    for (var i = 0; i < rotateAmount; i++) {
+      var temp = this._arr[15];
+
+      for (var j = 15; j >= 0; j--) {
+        carryTemp = (this._arr[j] & 0x80) >>> 7;
+        this._arr[j] = ((this._arr[j] << 1) & 0xff) | (carry & 0x1);
+        carry = carryTemp;
+      }
+
+      carryTemp = (temp & 0x80) >>> 7;
+      temp = ((temp << 1) & 0xff) | (carry & 0x1);
+      carry = carryTemp;
+
+      this._arr[15] = temp;
+    }
+  }
+
+  rotateRight() {
+    var carry = 1;
+    var carryTemp;
+    var rotateAmount = this._arr[SHIFT_BYTE];
+
+    for (var i = 0; i < rotateAmount; i++) {
+      var temp = this._arr[0];
+
+      for (var j = 0; j < 16; j++) {
+        carryTemp = this._arr[j] & 0x1;
+        this._arr[j] = (this._arr[j] >>> 1) | ((carry & 0x1) << 7);
+        carry = carryTemp;
+      }
+
+      carryTemp = temp & 0x1;
+      temp = (temp >>> 1) | ((carry & 0x1) << 7);
+      carry = carryTemp;
+      this._arr[0] = temp;
+    }
   }
 }
 
