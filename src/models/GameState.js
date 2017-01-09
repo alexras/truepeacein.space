@@ -18,14 +18,6 @@ var START_LOCATION_KRAID = 'kraidsLair';
 var START_LOCATION_RIDLEY = 'ridleysLair';
 var START_LOCATION_TOURIAN = 'tourian';
 
-var VALID_START_LOCATIONS = [
-  START_LOCATION_BRINSTAR,
-  START_LOCATION_NORFAIR,
-  START_LOCATION_KRAID,
-  START_LOCATION_RIDLEY,
-  START_LOCATION_TOURIAN
-];
-
 class GameState {
   constructor(buffer, onChange) {
     this._buffer = buffer;
@@ -91,7 +83,6 @@ class GameState {
         break;
       default:
         throw new Error('Invalid start location "' + location + '"');
-        break;
     }
 
     this._onChange();
