@@ -97,7 +97,7 @@ class GameState {
   }
 
   set swimsuit(swimsuitOn) {
-    this._buffer.setBit(SWIMSUIT_BIT, true);
+    this._buffer.setBit(SWIMSUIT_BIT, swimsuitOn);
     this._onChange();
   }
 }

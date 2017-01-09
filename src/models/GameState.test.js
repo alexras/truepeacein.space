@@ -141,6 +141,8 @@ describe('swimsuit', () => {
     expect(buffer.getBit(71)).toBe(false);
     gameState.swimsuit = true;
     expect(buffer.getBit(71)).toBe(true);
-    expect(onChange).toHaveBeenCalled();
+    gameState.swimsuit = false;
+    expect(buffer.getBit(71)).toBe(false);
+    expect(onChange).toHaveBeenCalledTimes(2);
   });
 });

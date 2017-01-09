@@ -23,7 +23,7 @@ class GameState extends Component {
         <div className="column">
           <MissileCount count={this.props.gameState.missiles} />
           <StartLocation location={this.props.gameState.startLocation} />
-          <Armor swimsuit={this.props.gameState.swimsuit} />
+          <Armor gameState={this.props.gameState} />
         </div>
       </div>
     );
