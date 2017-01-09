@@ -6,6 +6,18 @@ class BitBuffer {
     this._arr = arr;
   }
 
+  static newEmptyBuffer() {
+    var EMPTY_BLOCKS = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    return new BitBuffer(new Uint8Array(EMPTY_BLOCKS));
+  }
+
+  static copy(bufferToCopy) {
+    if (!(bufferToCopy instanceof BitBuffer)) {
+      throw new Error("BitBuffer's copy constructor only takes BitBuffers as arguments");
+    }
+    return new BitBuffer(bufferToCopy._arr.slice(0));
+  }
+
   getBit(bit) {
     if (bit === undefined || bit === null) {
       throw new Error('Must provide a bit index to get');
@@ -165,11 +177,6 @@ class BitBuffer {
   fixChecksum() {
     var checksum = this._calculateChecksum();
     this._arr[CHECKSUM_BYTE] = checksum;
-  }
-
-  static newEmptyBuffer() {
-    var EMPTY_BLOCKS = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    return new BitBuffer(new Uint8Array(EMPTY_BLOCKS));
   }
 
   // Note to self; this comes from GPLv3 code (mpg v1.0a), so we'll have to set the license accordingly

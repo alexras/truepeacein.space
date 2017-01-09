@@ -444,3 +444,25 @@ describe('bit shifting', () => {
     testShift(13, 'left', [0x79, 0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x8, 0x3b, 13]);
   });
 });
+
+describe('copy constructor', () => {
+  it('should make a copy that has a distinct backing array from the original', () => {
+    var buf = BitBuffer.newEmptyBuffer();
+    buf.setByte(4, 0xdb);
+    buf.setByte(6, 0xca);
+
+    var buf2 = BitBuffer.copy(buf);
+    expect(buf2.getByte(4)).toBe(0xdb);
+    expect(buf2.getByte(6)).toBe(0xca);
+
+    buf.setByte(8, 0xdd);
+    expect(buf.getByte(8)).toBe(0xdd);
+    expect(buf2.getByte(8)).toBe(0);
+  });
+
+  it('should throw if its argument is not a BitBuffer', () => {
+    expect(() => {
+      BitBuffer.copy('banana');
+    }).toThrowError(/only takes BitBuffers/);
+  });
+});
