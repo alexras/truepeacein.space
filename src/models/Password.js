@@ -78,8 +78,9 @@ function gameStateBytesToPasswordCharacters(passwordBlocks) {
 }
 
 class Password {
-  constructor(buffer) {
+  constructor(buffer, onChange) {
     this._buffer = buffer;
+    this._onChange = onChange;
   }
 
   get str() {
@@ -93,6 +94,7 @@ class Password {
     var metroidAlphaChars = passwordStringToMetroidAlphabet(newPassword);
     this._buffer.setBytes(0, PASSWORD_SIZE_BYTES - 1, passwordCharactersToGameStateBytes(metroidAlphaChars));
     this._buffer.rotateLeft();
+    this._onChange();
   }
 
   get checksumOK() {

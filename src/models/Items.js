@@ -1,4 +1,4 @@
-function defineBufferOffsetGetter(buffer, obj, propName, offset) {
+function defineBufferOffsetGetter(buffer, obj, propName, offset, onChange) {
   Object.defineProperty(
     obj, propName, {
       enumerable: true,
@@ -7,17 +7,18 @@ function defineBufferOffsetGetter(buffer, obj, propName, offset) {
       },
       set: function(newVal) {
         buffer.setBit(offset, newVal);
+        onChange();
       }
     });
 }
 
 class Area {
-  constructor(buffer, itemOffsets) {
+  constructor(buffer, itemOffsets, onChange) {
     if (itemOffsets.missileContainers) {
       this.missileContainers = {};
 
       itemOffsets.missileContainers.forEach(function(missileContainerOffset, arrayIndex) {
-        defineBufferOffsetGetter(buffer, this.missileContainers, arrayIndex.toString(), missileContainerOffset);
+        defineBufferOffsetGetter(buffer, this.missileContainers, arrayIndex.toString(), missileContainerOffset, onChange);
       }.bind(this));
     }
 
@@ -25,7 +26,7 @@ class Area {
       this.energyTanks = {};
 
       itemOffsets.energyTanks.forEach(function(energyTankOffset, arrayIndex) {
-        defineBufferOffsetGetter(buffer, this.energyTanks, arrayIndex.toString(), energyTankOffset);
+        defineBufferOffsetGetter(buffer, this.energyTanks, arrayIndex.toString(), energyTankOffset, onChange);
       }.bind(this));
     }
 
@@ -33,7 +34,7 @@ class Area {
       this.zebetites = {};
 
       itemOffsets.zebetites.forEach(function(zebetiteOffset, arrayIndex) {
-        defineBufferOffsetGetter(buffer, this.zebetites, arrayIndex.toString(), zebetiteOffset);
+        defineBufferOffsetGetter(buffer, this.zebetites, arrayIndex.toString(), zebetiteOffset, onChange);
       }.bind(this));
     }
 
@@ -41,14 +42,14 @@ class Area {
       this.doors = {};
 
       Object.keys(itemOffsets.doors).forEach(function(doorName) {
-        defineBufferOffsetGetter(buffer, this.doors, doorName, itemOffsets.doors[doorName]);
+        defineBufferOffsetGetter(buffer, this.doors, doorName, itemOffsets.doors[doorName], onChange);
       }.bind(this));
     }
   }
 }
 
 class Items {
-  constructor(buffer) {
+  constructor(buffer, onChange) {
     this.brinstar = new Area(buffer, {
       missileContainers: [1, 8],
       energyTanks: [4, 9, 12],
@@ -59,7 +60,7 @@ class Items {
         iceBeam: 7,
         varia: 10
       }
-    });
+    }, onChange);
 
     this.tourian = new Area(buffer, {
       doors: {
@@ -68,7 +69,7 @@ class Items {
         three: 52
       },
       zebetites: [53, 54, 55, 56, 57]
-    });
+    }, onChange);
 
     this.norfair = new Area(buffer, {
       missileContainers: [13, 14, 16, 17, 18, 19, 20, 21, 22, 27, 28, 31],
@@ -79,7 +80,8 @@ class Items {
         waveBeam: 29,
         iceBeam: 15
       }
-    });
+    }, onChange);
+
     this.ridley = new Area(buffer, {
       missileContainers: [43, 46, 49],
       energyTanks: [45, 48],
@@ -87,7 +89,8 @@ class Items {
         one: 44,
         ridleysRoom: 47
       }
-    });
+    }, onChange);
+
     this.kraid = new Area(buffer, {
       missileContainers: [33, 34, 39, 40],
       energyTanks: [36, 42],
@@ -98,7 +101,7 @@ class Items {
         four: 38,
         kraidsRoom: 41
       }
-    });
+    }, onChange);
   }
 }
 

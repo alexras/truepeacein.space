@@ -4,11 +4,13 @@ import BitBuffer from './BitBuffer';
 describe('Item accessor tests', () => {
   var buffer;
   var items;
+  var onChange;
 
   function testWrite(area, itemType, key, bufferBit) {
     expect(buffer.getBit(bufferBit)).toBe(false);
     items[area][itemType][key] = true;
     expect(buffer.getBit(bufferBit)).toBe(true);
+    expect(onChange).toHaveBeenCalled();
   }
 
   function testRead(area, itemType, key, bufferBit) {
@@ -19,7 +21,8 @@ describe('Item accessor tests', () => {
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    items = new Items(buffer);
+    onChange = jest.fn();
+    items = new Items(buffer, onChange);
   });
 
   describe('Brinstar', () => {

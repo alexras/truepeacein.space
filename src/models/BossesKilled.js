@@ -3,8 +3,9 @@ var RIDLEY_BIT = 124;
 var KRAID_BIT = 126;
 
 class BossesKilled {
-  constructor(buffer) {
+  constructor(buffer, onChange) {
     this._buffer = buffer;
+    this._onChange = onChange;
   }
 
   get motherBrain() {
@@ -13,6 +14,7 @@ class BossesKilled {
 
   set motherBrain(isAlive) {
     this._buffer.setBit(MOTHER_BRAIN_BIT, isAlive);
+    this._onChange();
   }
 
   get ridley() {
@@ -21,6 +23,7 @@ class BossesKilled {
 
   set ridley(isAlive) {
     this._buffer.setBit(RIDLEY_BIT, isAlive);
+    this._onChange();
   }
 
   get kraid() {
@@ -29,6 +32,7 @@ class BossesKilled {
 
   set kraid(isAlive) {
     this._buffer.setBit(KRAID_BIT, isAlive);
+    this._onChange();
   }
 };
 

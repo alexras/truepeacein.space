@@ -3,11 +3,13 @@ import GameAge from './GameAge';
 
 describe('bytes to ticks conversion', () => {
   var buffer;
+  var onChange;
   var gameAge;
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    gameAge = new GameAge(buffer);
+    onChange = jest.fn();
+    gameAge = new GameAge(buffer, onChange);
   });
 
   it('should read ticks properly', () => {
@@ -21,22 +23,26 @@ describe('bytes to ticks conversion', () => {
 
     expect(buffer.getBytes(11, 14))
       .toEqual(new Uint8Array([0xdd, 0xbc, 0xf1, 0x45]));
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should convert ticks to seconds properly', () => {
     gameAge.ntsc.ticks = 0xddbcf145;
     expect(gameAge.ntsc.seconds).toBe(15872628347);
     expect(gameAge.pal.seconds).toBe(19047154017);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should set NTSC seconds properly', () => {
     gameAge.ntsc.seconds = 15872628348;
     expect(gameAge.ntsc.ticks).toBe(0xddbcf145);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should set PAL seconds properly', () => {
     gameAge.pal.seconds = 19047154018;
     expect(gameAge.ntsc.ticks).toBe(0xddbcf145);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should convert ticks to hours, minutes, and seconds properly', () => {
@@ -53,6 +59,8 @@ describe('bytes to ticks conversion', () => {
       minutes: 48,
       seconds: 48
     });
+
+    expect(onChange).toHaveBeenCalledTimes(2);
   });
 
   it('should set hours, minutes, and seconds properly', () => {
@@ -73,6 +81,7 @@ describe('bytes to ticks conversion', () => {
 
     // Not precisely 9000 because of tick conversion precision
     expect(gameAge.pal.seconds).toBe(8995);
+    expect(onChange).toHaveBeenCalledTimes(2);
   });
 
   it('should throw if hours, minutes, or seconds are missing when setting HMS', () => {

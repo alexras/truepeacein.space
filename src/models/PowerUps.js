@@ -1,8 +1,9 @@
 class PowerUp {
-  constructor(buffer, equippedIndex, takenIndex) {
+  constructor(buffer, onChange, equippedIndex, takenIndex) {
     this._buffer = buffer;
     this._equippedIndex = equippedIndex;
     this._takenIndex = takenIndex;
+    this._onChange = onChange;
   }
 
   get taken() {
@@ -16,6 +17,7 @@ class PowerUp {
   set taken(isTaken) {
     if (this._takenIndex) {
       this._buffer.setBit(this._takenIndex, isTaken);
+      this._onChange();
     } else {
       throw new Error('Powerup does not have a "taken" flag to set');
     }
@@ -27,19 +29,20 @@ class PowerUp {
 
   set equipped(isEquipped) {
     this._buffer.setBit(this._equippedIndex, isEquipped);
+    this._onChange();
   }
 }
 
 class PowerUps {
-  constructor(buffer) {
-    this.morphball = new PowerUp(buffer, 76, 0);
-    this.bombs = new PowerUp(buffer, 72, 6);
-    this.longbeam = new PowerUp(buffer, 74);
-    this.wavebeam = new PowerUp(buffer, 78);
-    this.icebeam = new PowerUp(buffer, 79);
-    this.screwattack = new PowerUp(buffer, 75, 26);
-    this.variasuit = new PowerUp(buffer, 77, 11);
-    this.hijumpboots = new PowerUp(buffer, 73, 24);
+  constructor(buffer, onChange) {
+    this.morphball = new PowerUp(buffer, onChange, 76, 0);
+    this.bombs = new PowerUp(buffer, onChange, 72, 6);
+    this.longbeam = new PowerUp(buffer, onChange, 74);
+    this.wavebeam = new PowerUp(buffer, onChange, 78);
+    this.icebeam = new PowerUp(buffer, onChange, 79);
+    this.screwattack = new PowerUp(buffer, onChange, 75, 26);
+    this.variasuit = new PowerUp(buffer, onChange, 77, 11);
+    this.hijumpboots = new PowerUp(buffer, onChange, 73, 24);
   }
 }
 

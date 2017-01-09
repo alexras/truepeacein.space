@@ -4,17 +4,19 @@ import PowerUps from './PowerUps';
 describe('PowerUps accessor tests', () => {
   var buffer;
   var powerups;
-
+  var onChange;
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    powerups = new PowerUps(buffer);
+    onChange = jest.fn();
+    powerups = new PowerUps(buffer, onChange);
   });
 
   it('should set morphball to equipped', () => {
     expect(buffer.getBit(76)).toBe(false);
     powerups.morphball.equipped = true;
     expect(buffer.getBit(76)).toBe(true);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should get equipped state of long beam', () => {
@@ -27,6 +29,7 @@ describe('PowerUps accessor tests', () => {
     expect(buffer.getBit(11)).toBe(false);
     powerups.variasuit.taken = true;
     expect(buffer.getBit(11)).toBe(true);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should get taken state for bombs', () => {

@@ -4,10 +4,12 @@ import GameState from './GameState';
 describe('missiles', () => {
   var buffer;
   var gameState;
+  var onChange;
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    gameState = new GameState(buffer);
+    onChange = jest.fn();
+    gameState = new GameState(buffer, onChange);
   });
 
   it('should initialize with 0 missiles', () => {
@@ -22,6 +24,7 @@ describe('missiles', () => {
   it('should write missile count properly', () => {
     gameState.missiles = 163;
     expect(buffer.getByte(10)).toBe(163);
+    expect(onChange).toHaveBeenCalled();
   });
 
   it('should throw if missile count is negative', () => {
@@ -40,16 +43,19 @@ describe('missiles', () => {
 describe('startLocation', () => {
   var buffer;
   var gameState;
+  var onChange;
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    gameState = new GameState(buffer);
+    onChange = jest.fn();
+    gameState = new GameState(buffer, onChange);
   });
 
   function testSetLocation(locationName, expectedBitState) {
     expect(buffer.getBits([64, 65, 66])).toEqual([false, false, false]);
     gameState.startLocation = locationName;
     expect(buffer.getBits([64, 65, 66])).toEqual(expectedBitState);
+    expect(onChange).toHaveBeenCalled();
   }
 
   function testGetLocation(expectedLocationName, bitState) {
@@ -116,11 +122,13 @@ it('should read the reset bit', () => {
 
 describe('swimsuit', () => {
   var buffer;
+  var onChange;
   var gameState;
 
   beforeEach(() => {
     buffer = BitBuffer.newEmptyBuffer();
-    gameState = new GameState(buffer);
+    onChange = jest.fn();
+    gameState = new GameState(buffer, onChange);
   });
 
   it('should read correct swimsuit state', () => {
@@ -133,5 +141,6 @@ describe('swimsuit', () => {
     expect(buffer.getBit(71)).toBe(false);
     gameState.swimsuit = true;
     expect(buffer.getBit(71)).toBe(true);
+    expect(onChange).toHaveBeenCalled();
   });
 });

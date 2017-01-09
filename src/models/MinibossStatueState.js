@@ -2,8 +2,9 @@ var RIDLEY_BIT = 125;
 var KRAID_BIT = 127;
 
 class MinibossStatueState {
-  constructor(buffer) {
+  constructor(buffer, onChange) {
     this._buffer = buffer;
+    this._onChange = onChange;
   }
 
   get ridley() {
@@ -12,6 +13,7 @@ class MinibossStatueState {
 
   set ridley(isRaised) {
     this._buffer.setBit(RIDLEY_BIT, isRaised);
+    this._onChange();
   }
 
   get kraid() {
@@ -20,6 +22,7 @@ class MinibossStatueState {
 
   set kraid(isRaised) {
     this._buffer.setBit(KRAID_BIT, isRaised);
+    this._onChange();
   }
 };
 

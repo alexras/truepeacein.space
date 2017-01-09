@@ -27,13 +27,14 @@ var VALID_START_LOCATIONS = [
 ];
 
 class GameState {
-  constructor(buffer) {
+  constructor(buffer, onChange) {
     this._buffer = buffer;
-    this.powerups = new PowerUps(buffer);
-    this.items = new Items(buffer);
-    this.bossesKilled = new BossesKilled();
-    this.statuesRaised = new MinibossStatueState();
-    this.gameAge = new GameAge(buffer);
+    this._onChange = onChange;
+    this.powerups = new PowerUps(buffer, onChange);
+    this.items = new Items(buffer, onChange);
+    this.bossesKilled = new BossesKilled(buffer, onChange);
+    this.statuesRaised = new MinibossStatueState(buffer, onChange);
+    this.gameAge = new GameAge(buffer, onChange);
   }
 
   get missiles() {
@@ -50,6 +51,7 @@ class GameState {
     }
 
     this._buffer.setByte(MISSILE_COUNT_BYTE, missileCount);
+    this._onChange();
   }
 
   get startLocation() {
@@ -91,6 +93,8 @@ class GameState {
         throw new Error('Invalid start location "' + location + '"');
         break;
     }
+
+    this._onChange();
   }
 
   get reset() {
@@ -103,6 +107,7 @@ class GameState {
 
   set swimsuit(swimsuitOn) {
     this._buffer.setBit(SWIMSUIT_BIT, true);
+    this._onChange();
   }
 }
 

@@ -3,10 +3,14 @@ import BitBuffer from './BitBuffer';
 
 function checkPassword(passwordString, expectedBufferContents, expectedChecksumOK) {
   describe('"' + passwordString + '"', () => {
+    var onChange;
     var password;
+
     beforeEach(() => {
-      password = new Password(BitBuffer.newEmptyBuffer());
+      onChange = jest.fn();
+      password = new Password(BitBuffer.newEmptyBuffer(), onChange);
       password.str = passwordString;
+      expect(onChange).toHaveBeenCalled();
     });
 
     it('should produce the right game state', () => {

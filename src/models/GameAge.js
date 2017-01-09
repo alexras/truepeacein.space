@@ -6,9 +6,10 @@ var GAME_AGE_START_BYTE = 11;
 var GAME_AGE_END_BYTE = 14;
 
 class Timer {
-  constructor(buffer, refreshRate) {
+  constructor(buffer, refreshRate, onChange) {
     this._buffer = buffer;
     this._refreshRate = refreshRate;
+    this._onChange = onChange;
   }
 
   get seconds() {
@@ -74,13 +75,14 @@ class Timer {
     }
 
     this._buffer.setBytes(GAME_AGE_START_BYTE, GAME_AGE_END_BYTE, gameAgeBytes);
+    this._onChange();
   }
 };
 
 class GameAge {
-  constructor(buffer) {
-    this.ntsc = new Timer(buffer, NTSC_REFRESH_RATE_HZ);
-    this.pal = new Timer(buffer, PAL_REFRESH_RATE_HZ);
+  constructor(buffer, onChange) {
+    this.ntsc = new Timer(buffer, NTSC_REFRESH_RATE_HZ, onChange);
+    this.pal = new Timer(buffer, PAL_REFRESH_RATE_HZ, onChange);
   }
 };
 

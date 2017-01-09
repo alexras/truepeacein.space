@@ -3,6 +3,7 @@ import BitBuffer from './BitBuffer';
 export function testClassWithSimpleProps(clazz, propToBitMap) {
   describe('accessor tests', () => {
     var buffer;
+    var onChange;
     var instance;
 
     function testSet(propName, bufferBit) {
@@ -10,6 +11,7 @@ export function testClassWithSimpleProps(clazz, propToBitMap) {
         expect(buffer.getBit(bufferBit)).toBe(false);
         instance[propName] = true;
         expect(buffer.getBit(bufferBit)).toBe(true);
+        expect(onChange).toHaveBeenCalled();
       });
     }
 
@@ -23,7 +25,8 @@ export function testClassWithSimpleProps(clazz, propToBitMap) {
 
     beforeEach(() => {
       buffer = BitBuffer.newEmptyBuffer();
-      instance = new clazz(buffer);
+      onChange = jest.fn();
+      instance = new clazz(buffer, onChange);
     });
 
     Object.keys(propToBitMap).forEach(function(propName) {
