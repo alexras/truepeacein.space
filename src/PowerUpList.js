@@ -12,6 +12,21 @@ import variasuit from './images/varia-suit.png';
 import hijumpboots from './images/hi-jump-boots.png';
 
 class PowerUp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    if (this.props.status.hasOwnProperty('taken')) {
+      this.props.status.taken = !(this.props.status.taken);
+      this.props.status.equipped = this.props.status.taken;
+    } else {
+      this.props.status.equipped = !(this.props.status.equipped);
+    }
+  }
+
   render() {
     var powerUpStatusTmp;
 
@@ -26,7 +41,7 @@ class PowerUp extends Component {
     const powerUpStatus = powerUpStatusTmp;
 
     return (
-      <img src={this.props.icon} role="presentation" className={powerUpStatus}/>
+        <img key={this.props.name} src={this.props.icon} role="presentation" className={powerUpStatus} onClick={this.handleClick}/>
     );
   }
 }
