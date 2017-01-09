@@ -100,6 +100,11 @@ class Password {
       return false;
     }
   }
+
+  fixChecksum() {
+    this._buffer.fixChecksum();
+    this._onChange();
+  }
 };
 
 export default Password;

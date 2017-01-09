@@ -1,24 +1,38 @@
 import React, { Component } from 'react';
 import './App.css';
 import './fonts.css';
-import GameState from './GameState';
+import { default as GameStateView } from './GameState';
 import PasswordEntry from './PasswordEntry';
 
-import { gameStateToJSON, passwordStringToGameState } from './password-utils.js';
+import BitBuffer from './models/BitBuffer';
+import GameState from './models/GameState';
+import Password from './models/Password';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      gameState: gameStateToJSON(passwordStringToGameState('JUSTINBAILEY------------'))
-    };
 
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+
+    var buffer = BitBuffer.newEmptyBuffer();
+    var gameState = new GameState(buffer, this.handlePasswordChange);
+    var password = new Password(buffer, this.handlePasswordChange);
+
+    this.state = {
+      gameState: gameState,
+      password: password
+    };
+
+
   }
 
-  handlePasswordChange(newGameState) {
+  handlePasswordChange() {
+    const password = this.state.password;
+    const gameState = this.state.gameState;
+
     this.setState({
-      gameState: newGameState
+      gameState: gameState,
+      password: password
     });
   }
 
@@ -31,8 +45,8 @@ class App extends Component {
             <h3 className="password-lowercase">metroid password generator</h3>
           </div>
         </div>
-        <PasswordEntry onChange={this.handlePasswordChange} />
-        <GameState gameState={this.state.gameState} />
+        <PasswordEntry password={this.state.password} />
+        <GameStateView gameState={this.state.gameState} />
       </div>
     );
   }
