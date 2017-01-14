@@ -4,9 +4,9 @@ import './fonts.css';
 import { default as GameStateView } from './GameState';
 import PasswordEntry from './PasswordEntry';
 
-import BitBuffer from './models/BitBuffer';
-import GameState from './models/GameState';
-import Password from './models/Password';
+import BitBuffer from '../models/BitBuffer';
+import GameState from '../models/GameState';
+import Password from '../models/Password';
 
 class App extends Component {
   constructor(props) {
