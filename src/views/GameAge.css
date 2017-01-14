@@ -1,0 +1,41 @@
+.GameAge {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+}
+
+.GameAge .timeRow {
+    display: flex;
+    justify-content: center;
+}
+
+.GameAge .timeRow .timeBox {
+    padding: 0px 10px;
+    text-align: center;
+}
+
+.GameAge .timeHeader {
+    text-align:center;
+}
+
+.GameAge .timeHeader h4 {
+    margin: 10px 0 0 0;
+}
+
+.GameAge .timeRow .timeBox input.time {
+    width: 50px;
+    text-align: center;
+    font-family: 'narpassword00000_fixed.normal';
+    font-size: 18px;
+    border: 5px solid #009400;
+}
+
+.GameAge .timeRow .timeBox input.hours {
+    width: 100px;
+}
+
+.GameAge .timeRow .timeBox h4 {
+    margin: 0 0 5px 0;
+}

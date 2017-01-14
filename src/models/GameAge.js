@@ -17,7 +17,7 @@ class Timer {
   }
 
   set seconds(numSeconds) {
-    this.ticks = (numSeconds * this._refreshRate) / REFRESHES_PER_TICK;
+    this.ticks = Math.floor((numSeconds * this._refreshRate) / REFRESHES_PER_TICK);
   }
 
   get hms() {
@@ -52,6 +52,7 @@ class Timer {
   get ticks() {
     var gameAgeInTicks = 0;
     var gameAgeBytes = this._buffer.getBytes(GAME_AGE_START_BYTE, GAME_AGE_END_BYTE);
+    gameAgeBytes.reverse();
 
     gameAgeBytes.forEach(function(byte) {
       gameAgeInTicks <<= 8;
@@ -73,6 +74,8 @@ class Timer {
       gameAgeBytes.unshift(gameAgeTmp & 0xff);
       gameAgeTmp >>>= 8;
     }
+
+    gameAgeBytes.reverse();
 
     this._buffer.setBytes(GAME_AGE_START_BYTE, GAME_AGE_END_BYTE, gameAgeBytes);
     this._onChange();

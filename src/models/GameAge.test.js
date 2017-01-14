@@ -15,33 +15,33 @@ describe('bytes to ticks conversion', () => {
   it('should read ticks properly', () => {
     buffer.setBytes(11, 14, [0x89, 0xab, 0xcd, 0xef]);
 
-    expect(gameAge.ntsc.ticks).toBe(0x89abcdef);
+    expect(gameAge.ntsc.ticks).toBe(0xefcdab89);
   });
 
   it('should write ticks properly', () => {
     gameAge.ntsc.ticks = 0xddbcf145;
 
     expect(buffer.getBytes(11, 14))
-      .toEqual(new Uint8Array([0xdd, 0xbc, 0xf1, 0x45]));
+      .toEqual(new Uint8Array([0x45, 0xf1, 0xbc, 0xdd]));
     expect(onChange).toHaveBeenCalled();
   });
 
   it('should convert ticks to seconds properly', () => {
-    gameAge.ntsc.ticks = 0xddbcf145;
-    expect(gameAge.ntsc.seconds).toBe(15872628347);
-    expect(gameAge.pal.seconds).toBe(19047154017);
+    gameAge.ntsc.ticks = 300;
+    expect(gameAge.ntsc.seconds).toBe(1280);
+    expect(gameAge.pal.seconds).toBe(1536);
     expect(onChange).toHaveBeenCalled();
   });
 
   it('should set NTSC seconds properly', () => {
-    gameAge.ntsc.seconds = 15872628348;
-    expect(gameAge.ntsc.ticks).toBe(0xddbcf145);
+    gameAge.ntsc.seconds = 340;
+    expect(gameAge.ntsc.ticks).toBe(79);
     expect(onChange).toHaveBeenCalled();
   });
 
   it('should set PAL seconds properly', () => {
-    gameAge.pal.seconds = 19047154018;
-    expect(gameAge.ntsc.ticks).toBe(0xddbcf145);
+    gameAge.pal.seconds = 5000;
+    expect(gameAge.pal.ticks).toBe(976);
     expect(onChange).toHaveBeenCalled();
   });
 

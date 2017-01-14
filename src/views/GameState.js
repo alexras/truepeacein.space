@@ -7,6 +7,7 @@ import StartLocation from './StartLocation';
 import Bosses from './Bosses';
 import Armor from './Armor';
 import Doors from './Doors';
+import GameAge from './GameAge';
 
 class GameState extends Component {
   render() {
@@ -18,6 +19,7 @@ class GameState extends Component {
           <Doors items={this.props.gameState.items} />
         </div>
         <div className="column">
+          <GameAge age={this.props.gameState.gameAge} />
           <Items items={this.props.gameState.items} />
         </div>
         <div className="column">
