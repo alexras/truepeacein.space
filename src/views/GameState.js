@@ -21,7 +21,7 @@ class GameState extends Component {
           <Items items={this.props.gameState.items} />
         </div>
         <div className="column">
-          <MissileCount count={this.props.gameState.missiles} />
+          <MissileCount gameState={this.props.gameState} />
           <StartLocation gameState={this.props.gameState} />
           <Armor gameState={this.props.gameState} />
         </div>

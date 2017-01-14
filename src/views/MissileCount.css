@@ -15,9 +15,14 @@
 
 .MissileCount-icon {
     float: left;
+    margin-bottom: 6px;
 }
 
 .MissileCount-count {
     float: left;
-    font-size: x-large;
+    font-size: 18px;
+    font-family: 'narpassword00000_fixed.normal';
+    width: 3em;
+    text-align: center;
+    border: 5px solid #009400;
 }
