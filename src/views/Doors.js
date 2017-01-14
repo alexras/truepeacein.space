@@ -5,6 +5,26 @@ import redSquareFilled from './images/red-square-filled.png';
 
 var areas = ['brinstar', 'norfair', 'ridley', 'kraid', 'tourian'];
 
+class Door extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  render() {
+    return (
+      <div key={"door-" + this.props.areaName + "-" + this.props.index} className="door">
+        <img alt={'Door ' + this.props.areaName + ' ' + (this.props.index + 1)} src={this.props.areaItems.doors[this.props.doorName] ? redSquareEmpty : redSquareFilled} onClick={this.handleClick}/>
+      </div>
+    );
+  }
+
+  handleClick() {
+    this.props.areaItems.doors[this.props.doorName] = !(this.props.areaItems.doors[this.props.doorName]);
+  }
+}
+
 class Doors extends Component {
   render() {
     var areaDivs = [];
@@ -16,9 +36,9 @@ class Doors extends Component {
       if (doors) {
         Object.keys(doors).forEach(function(door, index) {
           doorDivs.push((
-            <div key={"door-" + areaName + "-" + index} className="door"><img alt={'Door ' + areaName + ' ' + (index + 1)} src={doors[door] ? redSquareFilled : redSquareEmpty}/></div>
+              <Door key={areaName + '-' + index } areaName={areaName} index={index} areaItems={this.props.items[areaName]} doorName={door}/>
           ));
-        });
+        }.bind(this));
 
         areaDivs.push((
           <div key={"Doors-" + areaName} className="doorsForArea">
