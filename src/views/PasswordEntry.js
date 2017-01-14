@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './PasswordEntry.css';
 
+import Cleave from 'cleave.js/dist/cleave-react.min';
+
 class PasswordEntry extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class PasswordEntry extends Component {
   render() {
     return (
       <div className="PasswordEntry">
-        <input type="text" pattern="[A-Za-z0-9?\- ]{24}" maxLength="24" value={this.state.passwordString} onChange={this.handleChange} className={this.passwordValid() ? "good" : "bad"}/>
+        <Cleave options={{blocks: [6, 6, 6, 6], delimiter: ' '}} placeholder={this.state.passwordString} pattern="[A-Za-z0-9?\- ]{28}" maxLength="28" value={this.state.passwordString} onChange={this.handleChange} className={this.passwordValid() ? "good" : "bad"} />
       </div>
     );
   }
@@ -44,7 +46,7 @@ class PasswordEntry extends Component {
   }
 
   handleChange(event) {
-    var passwordString = event.target.value;
+    var passwordString = event.target.rawValue;
 
     this.setState({
       passwordString: passwordString
