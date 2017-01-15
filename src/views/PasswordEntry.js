@@ -48,6 +48,8 @@ class PasswordEntry extends Component {
   handleChange(event) {
     var passwordString = event.target.rawValue;
 
+    passwordString = passwordString.replace(/[^A-Za-z0-9\?\-]/g, '-');
+
     this.setState({
       passwordString: passwordString
     });
