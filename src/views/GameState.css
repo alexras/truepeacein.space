@@ -6,8 +6,18 @@
 }
 
 .GameState .column {
-    flex-basis: 33%;
-    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.GameState .column#column1 {
+    max-width: 400px;
+}
+
+.GameState .column#column2 {
+    max-width: 450px;
+}
+
+.GameState .column#column3 {
 }
 
 .GameState .row {

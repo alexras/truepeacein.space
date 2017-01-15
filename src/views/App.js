@@ -48,6 +48,8 @@ class App extends Component {
           </div>
         </div>
         <PasswordEntry password={this.state.password} />
+        <p>Enter password above or click/edit below.</p>
+        <p>Pray for a true peace in space!</p>
         <GameStateView gameState={this.state.gameState} />
         <div className="footer">
           <p>Written by <a href="http://www.alexras.info/">alexras</a> | Source on <a href="https://www.github.com/alexras/truepeacein.space">GitHub</a> | Metroid copyright Nintendo</p>

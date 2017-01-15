@@ -7,7 +7,7 @@ import './index.css';
 
 ReactDOM.render(
   (
-      <DocumentTitle title='Metroid Password Generator'>
+      <DocumentTitle title='truepeacein.space | Metroid Password Generator'>
       <App />
       </DocumentTitle>
   ),

@@ -14,16 +14,16 @@ class GameState extends Component {
   render() {
     return (
       <div className="GameState">
-        <div className="column">
+        <div className="column" id="column1">
           <Bosses gameState={this.props.gameState} />
           <Doors items={this.props.gameState.items} />
           <MinibossStatues gameState={this.props.gameState} />
         </div>
-        <div className="column">
+        <div className="column" id="column2">
           <GameAge age={this.props.gameState.gameAge} />
           <Items items={this.props.gameState.items} />
         </div>
-        <div className="column">
+        <div className="column" id="column3">
           <PowerUpList powerups={this.props.gameState.powerups} />
           <div className="row">
             <MissileCount gameState={this.props.gameState} />

@@ -7,6 +7,10 @@ h3 {
     margin: 30px 0 10px 0;
 }
 
+h4 {
+    margin: 30px 0 10px 0;
+}
+
 .App {
     display: flex;
     flex-wrap: wrap;
@@ -15,8 +19,13 @@ h3 {
     justify-content: center;
 }
 
+.App p {
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .App-header {
-    height: 100px;
     padding: 20px;
     font-family: 'narpassword00000_fixed.normal';
     display: flex;
@@ -50,7 +59,6 @@ h3 {
     text-transform: uppercase;
     text-align: center;
     padding-top: 20px;
-    height: 70px;
     font-size: 12px;
 }
 
