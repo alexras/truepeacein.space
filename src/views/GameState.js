@@ -8,6 +8,7 @@ import Bosses from './Bosses';
 import Armor from './Armor';
 import Doors from './Doors';
 import GameAge from './GameAge';
+import MinibossStatues from './MinibossStatues';
 
 class GameState extends Component {
   render() {
@@ -17,6 +18,7 @@ class GameState extends Component {
           <PowerUpList powerups={this.props.gameState.powerups} />
           <Bosses gameState={this.props.gameState} />
           <Doors items={this.props.gameState.items} />
+          <MinibossStatues gameState={this.props.gameState} />
         </div>
         <div className="column">
           <GameAge age={this.props.gameState.gameAge} />

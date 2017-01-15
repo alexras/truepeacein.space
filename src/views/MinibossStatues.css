@@ -1,0 +1,27 @@
+.MinibossStatues {
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.MinibossStatues .statues {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.MinibossStatues .statues .statue {
+    flex-basis: 100px;
+    height: 114px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.MinibossStatues .statues .statue img {
+    margin: 0 auto;
+}
