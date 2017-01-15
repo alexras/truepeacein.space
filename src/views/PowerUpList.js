@@ -41,7 +41,9 @@ class PowerUp extends Component {
     const powerUpStatus = powerUpStatusTmp;
 
     return (
-        <img key={this.props.name} src={this.props.icon} role="presentation" className={powerUpStatus} onClick={this.handleClick}/>
+        <div className="powerup-icon">
+          <img key={this.props.name} src={this.props.icon} role="presentation" className={powerUpStatus} onClick={this.handleClick}/>
+        </div>
     );
   }
 }

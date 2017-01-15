@@ -11,6 +11,13 @@
     flex-basis: 100%;
 }
 
+.PowerUpList .icons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
 .PowerUpList .images {
     flex-basis: 100%;
 }
