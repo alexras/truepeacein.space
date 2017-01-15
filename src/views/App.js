@@ -43,12 +43,15 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <div className="headerText">
-            <h2 className="password-uppercase">NARPASSWORD</h2>
-            <h3 className="password-lowercase">metroid password generator</h3>
+            <h2 className="password-uppercase">TRUEPEACEIN.SPACE</h2>
+            <h3 className="password-lowercase">metroid password tool</h3>
           </div>
         </div>
         <PasswordEntry password={this.state.password} />
         <GameStateView gameState={this.state.gameState} />
+        <div className="footer">
+          <p>Written by <a href="alexras.info">alexras</a></p>
+        </div>
       </div>
     );
   }

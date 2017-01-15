@@ -41,6 +41,23 @@ body {
     height: 80px;
 }
 
+body {
+    margin: 0 0 70px;
+}
+
+.App .footer {
+    font-family: 'narpassword00000_fixed.normal';
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 20px;
+    height: 70px;
+    font-size: 12px;
+}
+
+.App .footer a {
+    color: #62ACFF;
+}
+
 .flipX {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
