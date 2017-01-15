@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.Doors h4,h5 {
+.Doors h3,h4 {
     text-transform: uppercase;
     font-family: 'narpassword00000_fixed.normal';
     flex-basis: 100%;

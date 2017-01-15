@@ -42,7 +42,7 @@ class Doors extends Component {
 
         areaDivs.push((
           <div key={"Doors-" + areaName} className="doorsForArea">
-            <h5>{areaName}</h5>
+            <h4>{areaName}</h4>
             <div className="doorList">
               {doorDivs}
             </div>
@@ -53,7 +53,7 @@ class Doors extends Component {
 
     return (
         <div className="Doors">
-          <h4>Doors</h4>
+          <h3>Doors</h3>
           {areaDivs}
         </div>
     );

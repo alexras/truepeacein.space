@@ -15,7 +15,6 @@ class GameState extends Component {
     return (
       <div className="GameState">
         <div className="column">
-          <PowerUpList powerups={this.props.gameState.powerups} />
           <Bosses gameState={this.props.gameState} />
           <Doors items={this.props.gameState.items} />
           <MinibossStatues gameState={this.props.gameState} />
@@ -25,9 +24,12 @@ class GameState extends Component {
           <Items items={this.props.gameState.items} />
         </div>
         <div className="column">
-          <MissileCount gameState={this.props.gameState} />
+          <PowerUpList powerups={this.props.gameState.powerups} />
+          <div className="row">
+            <MissileCount gameState={this.props.gameState} />
+            <Armor gameState={this.props.gameState} />
+          </div>
           <StartLocation gameState={this.props.gameState} />
-          <Armor gameState={this.props.gameState} />
         </div>
       </div>
     );

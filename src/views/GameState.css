@@ -6,6 +6,17 @@
 }
 
 .GameState .column {
-    min-width: 300px;
-    flex-grow: 1;
+    flex-basis: 33%;
+    flex-shrink: 1;
+}
+
+.GameState .row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.GameState .row div {
+    flex-basis: 33%;;
 }

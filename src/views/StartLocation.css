@@ -7,6 +7,10 @@
     text-transform: uppercase;
 }
 
+.StartLocation h3 {
+    text-align: center;
+}
+
 .StartLocation h4 {
     margin: 2px 0px;
     font-weight: lighter;

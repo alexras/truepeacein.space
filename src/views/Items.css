@@ -7,7 +7,13 @@
     flex-wrap: wrap;
 }
 
+.Items .itemTypes {
+    display: flex;
+    flex-direction: row;
+}
+
 .Items .itemList {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,24 +28,6 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    width: 300px;
-}
-
-.Items .itemList .Items-list .item {
-    flex-shrink: 1;
-    text-align: center;
-}
-
-.Items .itemList .Items-list .item img {
-    width: 48px;
-}
-
-.Items .itemList .Items-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 300px;
 }
 
 .Items .itemList .Items-list .item {
@@ -54,8 +42,4 @@
 
 .Items .item-missing {
     filter: grayscale(100%) opacity(60%);
-}
-
-.Items .Items-list {
-    display: flex;
 }
