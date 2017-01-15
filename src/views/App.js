@@ -50,7 +50,7 @@ class App extends Component {
         <PasswordEntry password={this.state.password} />
         <GameStateView gameState={this.state.gameState} />
         <div className="footer">
-          <p>Written by <a href="alexras.info">alexras</a> | Source on <a href="github.com/alexras/truepeacein.space">GitHub</a> | Metroid copyright Nintendo</p>
+          <p>Written by <a href="http://www.alexras.info/">alexras</a> | Source on <a href="https://www.github.com/alexras/truepeacein.space">GitHub</a> | Metroid copyright Nintendo</p>
         </div>
       </div>
     );
