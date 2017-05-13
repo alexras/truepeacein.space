@@ -1,7 +1,7 @@
 import Password from './Password';
 import BitBuffer from './BitBuffer';
 
-function checkPassword(passwordString, expectedBufferContents, expectedChecksumOK) {
+function checkPassword(passwordString, expectedBufferContents, expectedChecksumOK, expectedValid) {
   describe('"' + passwordString + '"', () => {
     var onChange;
     var password;
@@ -26,19 +26,25 @@ function checkPassword(passwordString, expectedBufferContents, expectedChecksumO
     it('should' + (expectedChecksumOK ? ' ' : ' not ') + 'have a valid checksum', () => {
       expect(password.checksumOK).toBe(expectedChecksumOK);
     });
+
+    it('should ' + (expectedValid ? ' ' : ' not ') + 'be a valid password', () => {
+      expect(password.valid).toBe(expectedValid);
+    });
   });
 }
 
 checkPassword('000000000000000000000000',
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              true);
+              true, true);
+
+checkPassword('00000000000A00000000000A', [0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 10], true, false);
 
 checkPassword('JUSTINBAILEY------------',
               [166, 243, 142, 164, 185, 101, 36, 169, 209, 127,
-               255, 255, 255, 255, 255, 255, 255, 255], true);
+               255, 255, 255, 255, 255, 255, 255, 255], true, true);
 
 checkPassword('bogusBOGUSbogusBOGUSbogu',
-              [65, 231, 37, 202, 174, 54, 45, 132, 30, 114, 94, 92, 170, 227, 98, 216, 42, 184], false);
+              [65, 231, 37, 202, 174, 54, 45, 132, 30, 114, 94, 92, 170, 227, 98, 216, 42, 184], false, false);
 
 checkPassword('bogusBOGUSbogusBOGUSbohd',
-              [65, 231, 37, 202, 174, 54, 45, 132, 30, 114, 94, 92, 170, 227, 98, 216, 42, 231], true);
+              [65, 231, 37, 202, 174, 54, 45, 132, 30, 114, 94, 92, 170, 227, 98, 216, 42, 231], true, false);

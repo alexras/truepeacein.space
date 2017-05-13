@@ -20,3 +20,7 @@
 .StartLocation h4.startLocation {
     color: #009400;
 }
+
+.StartLocation h4.invalidStartLocation {
+    color: #aa0000;
+}

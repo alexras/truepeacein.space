@@ -107,6 +107,10 @@ class Password {
       this._onChange();
     }
   }
+
+  get valid() {
+    return this._buffer.getBit(67) === false;
+  }
 };
 
 export default Password;

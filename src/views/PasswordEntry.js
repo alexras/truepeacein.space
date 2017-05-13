@@ -35,7 +35,8 @@ class PasswordEntry extends Component {
   }
 
   passwordValid() {
-    return this.state.passwordString.length === 24 && this.props.password.checksumOK;
+    return this.state.passwordString.length === 24 && this.props.password.checksumOK &&
+      this.props.password.valid;
   }
 
   handleClickChecksumFix(event) {

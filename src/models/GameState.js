@@ -17,6 +17,7 @@ var START_LOCATION_NORFAIR = 'norfair';
 var START_LOCATION_KRAID = 'kraidsLair';
 var START_LOCATION_RIDLEY = 'ridleysLair';
 var START_LOCATION_TOURIAN = 'tourian';
+var START_LOCATION_INVALID = 'invalid';
 
 class GameState {
   constructor(buffer, onChange) {
@@ -47,6 +48,10 @@ class GameState {
   }
 
   get startLocation() {
+    if (this.reset) {
+      return START_LOCATION_INVALID;
+    }
+
     if (this._buffer.getBit(START_IN_NORFAIR_BIT)) {
       if (this._buffer.getBit(START_IN_KRAID_BIT)) {
         return START_LOCATION_TOURIAN;
@@ -80,6 +85,9 @@ class GameState {
         break;
       case START_LOCATION_TOURIAN:
         this._buffer.setBits(bitsToSet, [true, true, false]);
+        break;
+      case START_LOCATION_INVALID:
+        // Do nothing
         break;
       default:
         throw new Error('Invalid start location "' + location + '"');
