@@ -109,7 +109,14 @@ class Password {
   }
 
   get valid() {
-    return this._buffer.getBit(67) === false;
+    // The reset bit being on will reset the game immediately. In some cases,
+    // it might even do something worse.
+    var resetBitIsOff = this._buffer.getBit(67) === false;
+
+    // To complete the game, the morph ball must either be equipped or available.
+    var morphballIsRetrievable = this._buffer.getBit(76) === true || this._buffer.getBit(0) === false;
+
+    return resetBitIsOff && morphballIsRetrievable;
   }
 };
 

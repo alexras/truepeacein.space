@@ -43,4 +43,12 @@ describe('PowerUps accessor tests', () => {
       powerups.icebeam.taken = true;
     }).toThrowError(/does not have a/);
   });
+
+  it('should properly get and set taken state for morphball', () => {
+    expect(powerups.morphball.equipped).toBe(false);
+    expect(powerups.morphball.taken).toBe(false);
+    powerups.morphball.taken = true;
+    expect(powerups.morphball.equipped).toBe(false);
+    expect(powerups.morphball.taken).toBe(true);
+  });
 });

@@ -48,3 +48,9 @@ checkPassword('bogusBOGUSbogusBOGUSbogu',
 
 checkPassword('bogusBOGUSbogusBOGUSbohd',
               [65, 231, 37, 202, 174, 54, 45, 132, 30, 114, 94, 92, 170, 227, 98, 216, 42, 231], true, false);
+
+// Morph ball is both inaccessible and not equipped
+checkPassword('0G0000000000000000000001', [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], true, false);
+
+// Morphball is equipped and inaccessible
+checkPassword('0G000000000040000000000H', [1, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 17], true, true);

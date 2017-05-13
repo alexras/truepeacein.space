@@ -31,5 +31,5 @@
 }
 
 .PowerUpList-inaccessible {
-    filter: grayscale(100%) opacity(60%);
+    filter: grayscale(100%) opacity(100%);
 }

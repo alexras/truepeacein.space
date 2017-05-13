@@ -7,7 +7,7 @@ class PowerUp {
   }
 
   get taken() {
-    if (this._takenIndex) {
+    if (typeof(this._takenIndex) !== 'undefined') {
       return this._buffer.getBit(this._takenIndex);
     } else {
       return null;
@@ -15,7 +15,7 @@ class PowerUp {
   }
 
   set taken(isTaken) {
-    if (this._takenIndex) {
+    if (typeof(this._takenIndex) !== 'undefined') {
       this._buffer.setBit(this._takenIndex, isTaken);
       this._onChange();
     } else {

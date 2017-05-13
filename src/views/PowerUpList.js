@@ -19,11 +19,10 @@ class PowerUp extends Component {
   }
 
   handleClick() {
-    if (this.props.status.hasOwnProperty('taken')) {
-      this.props.status.taken = !(this.props.status.taken);
-      this.props.status.equipped = this.props.status.taken;
-    } else {
-      this.props.status.equipped = !(this.props.status.equipped);
+    this.props.status.equipped = !(this.props.status.equipped);
+
+    if (this.props.status.taken !== null) {
+      this.props.status.taken = this.props.status.equipped;
     }
   }
 
